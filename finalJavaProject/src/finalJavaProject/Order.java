@@ -10,7 +10,7 @@ public class Order {
 	private LocalDate orderDate;
 	private LocalDate requireDate;
 	private LocalDate shippedDate;
-	private enum Status {waiting, inProgress, finished}	
+	public enum Status {waiting, inProgress, finished}	
 	private Status status;
 	private String coments;
 	private int custumerNumber;

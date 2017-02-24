@@ -12,6 +12,8 @@ public class DataBase {
 	
 	Connection c = null;
 	boolean ligacao;
+	
+	
 	public DataBase() {
 		ligacao = false;
 		try {
@@ -158,5 +160,10 @@ public class DataBase {
 		}
 		return offices;
 	}
+	
+	
+	
+	
+	
 	
 }

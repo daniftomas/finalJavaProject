@@ -1,5 +1,7 @@
 package finalJavaProject;
 
+import java.util.Scanner;
+
 public class Utilities {
 	
 	public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
@@ -41,7 +43,33 @@ public class Utilities {
 		return (codePostal.matches("\\d*(([\\-])?\\d*)?"));
 	}
 	
-	//
+	// read positive number from pad
+	public static int readNumber() {
+
+		Scanner a;
+		int x = 0;
+		boolean badN=true;
+		
+		do {
+			a = new Scanner(System.in);
+			if (!a.hasNextInt()) {
+				System.out.println("Choose a positive number.");
+				
+			} else {
+				x = Integer.parseInt(a.nextLine());
+				if (x < 0) {
+					System.out.println("Positive numbers only.");
+				}
+				else{
+					badN=false;
+				}
+			}
+
+		} while ( x < 0 || badN);
+
+		return x;
+	}
+	
 	
 	
 }
