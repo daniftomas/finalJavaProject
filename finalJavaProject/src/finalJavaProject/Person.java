@@ -1,15 +1,19 @@
 package finalJavaProject;
 
-public abstract class Person {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String firstName;
 	private String lastName;
 	
 	public Person(String firstName, String lastName){
-		if (Utilities.validateSize(50, firstName))this.firstName = firstName;
-		else this.firstName = "invalid. Too long!";
-		if (Utilities.validateSize(50, lastName))this.lastName = lastName;
-		else this.lastName = "invalid. Too long!";
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 	
 	public Person(Person p){
@@ -26,12 +30,10 @@ public abstract class Person {
 	}
 	
 	public void setLastName(String lastName){
-		if (Utilities.validateSize(50, lastName)) this.lastName = lastName;
-		else this.lastName = "invalid. Too long!";
+		this.lastName = lastName;
 	}
 	
 	public void setFirstName(String firstName){
-		if (Utilities.validateSize(50, firstName)) this.firstName = firstName;
-		else this.firstName = "invalid. Too long!";
+		this.firstName = firstName;
 	}
 }

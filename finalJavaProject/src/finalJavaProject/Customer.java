@@ -1,7 +1,13 @@
 package finalJavaProject;
 
-public class Customer extends Person {
+import java.io.Serializable;
+
+public class Customer extends Person implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int customerNumber;
 	private String customerName;
 	private String phone;
@@ -14,52 +20,106 @@ public class Customer extends Person {
 	private int salesRepEmployeeNumber;
 	private double creditLimit;
 	
-	public Customer(Person p, int customerNumber, String phone, String addressLine1, String addressLine2, String city, String state, String postalCode, String country, int salesRepEmployeeNumber, double creditLimit) {
-		super(p);
-		this.customerNumber = customerNumber;
-		this.customerName = p.getFirstName() + " " + p.getLastName();
-		if (Utilities.validatePhone(phone)) this.phone = phone;
-		else this.phone = "invalid";
-		if (Utilities.validateSize(50, addressLine1)) this.addressLine1 = addressLine1;
-		else this.addressLine1 = "invalid. Too long!!";
-		if (Utilities.validateSize(50, addressLine2)) this.addressLine2 = addressLine2;
-		else this.addressLine2 = "invalid. Too long!!";
-		if (Utilities.validateSize(50, city)) this.city = city;
-		else this.city = "invalid. Too long!!";
-		if (Utilities.validateSize(50, state)) this.state = state;
-		else this.state = "invalid. Too long!!";
-		if (Utilities.validateSize(50, country)) this.country = country;
-		else this.country = "invalid. Too long!!";
-		if (Utilities.validateCodePostal(postalCode)) this.postalCode = postalCode;
-		else this.postalCode = "invalid";
-		if (salesRepEmployeeNumber > 0) this.salesRepEmployeeNumber = salesRepEmployeeNumber;
-		else this.salesRepEmployeeNumber = -1; 
-		if (creditLimit > 0) this.creditLimit = creditLimit;
-		else this.creditLimit = 0; 
+	public Customer(){
+		super("", "");
+		customerNumber = -1;
+		phone = "";
+		addressLine1 = "";
+		addressLine2 = "";
+		city = "";
+		state = "";
+		postalCode = "";
+		country = "";
+		salesRepEmployeeNumber = -1;
+		creditLimit = 0;
 	}
 	
 	public Customer(String firstName, String lastName, int customerNumber, String phone, String addressLine1, String addressLine2, String city, String state, String postalCode, String country, int salesRepEmployeeNumber, double creditLimit) {
 		super(firstName, lastName);
 		this.customerName = firstName + " " + lastName;
 		this.customerNumber = customerNumber;
-		if (Utilities.validatePhone(phone)) this.phone = phone;
-		else this.phone = "invalid";
-		if (Utilities.validateSize(50, addressLine1)) this.addressLine1 = addressLine1;
-		else this.addressLine1 = "invalid. Too long!!";
-		if (Utilities.validateSize(50, addressLine2)) this.addressLine2 = addressLine2;
-		else this.addressLine2 = "invalid. Too long!!";
-		if (Utilities.validateSize(50, city)) this.city = city;
-		else this.city = "invalid. Too long!!";
-		if (Utilities.validateSize(50, state)) this.state = state;
-		else this.state = "invalid. Too long!!";
-		if (Utilities.validateSize(50, country)) this.country = country;
-		else this.country = "invalid. Too long!!";
-		if (Utilities.validateCodePostal(postalCode)) this.postalCode = postalCode;
-		else this.postalCode = "invalid";
-		if (salesRepEmployeeNumber > 0) this.salesRepEmployeeNumber = salesRepEmployeeNumber;
-		else this.salesRepEmployeeNumber = -1; 
-		if (creditLimit > 0) this.creditLimit = creditLimit;
-		else this.creditLimit = 0; 
+		if (phone != null) {
+			this.phone = phone;
+		} else {
+			phone = "";
+		}
+		if (addressLine1 != null) {
+			this.addressLine1 = addressLine1;
+		} else {
+			addressLine1 = "";
+		}
+		if (addressLine2 != null) {
+			this.addressLine2 = addressLine2;
+		} else {
+			addressLine2 = "";
+		}
+		if (city != null) {
+			this.city = city;
+		} else {
+			city = "";
+		}
+		if (state != null) {
+			this.state = state;
+		}
+		else {
+			state = "";
+		}
+		if (country != null) {
+			this.country = country;
+		} else {
+			country = "";
+		}
+		if (postalCode != null) {
+			this.postalCode = postalCode;
+		} else {
+			postalCode = "";
+		}
+		this.salesRepEmployeeNumber = salesRepEmployeeNumber;
+		this.creditLimit = creditLimit;
+	}
+	
+	public Customer(String firstName, String lastName, String phone, String addressLine1, String addressLine2, String city, String state, String postalCode, String country, int salesRepEmployeeNumber, double creditLimit) {
+		super(firstName, lastName);
+		this.customerName = firstName + " " + lastName;
+		this.customerNumber = -1;
+		if (phone != null) {
+			this.phone = phone;
+		} else {
+			phone = "";
+		}
+		if (addressLine1 != null) {
+			this.addressLine1 = addressLine1;
+		} else {
+			addressLine1 = "";
+		}
+		if (addressLine2 != null) {
+			this.addressLine2 = addressLine2;
+		} else {
+			addressLine2 = "";
+		}
+		if (city != null) {
+			this.city = city;
+		} else {
+			city = "";
+		}
+		if (state != null) {
+			this.state = state;
+		}
+		else {
+			state = "";
+		}
+		if (country != null) {
+			this.country = country;
+		} else {
+			country = "";
+		}
+		if (postalCode != null) {
+			this.postalCode = postalCode;
+		} else {
+			postalCode = "";
+		}
+		this.salesRepEmployeeNumber = salesRepEmployeeNumber;
+		this.creditLimit = creditLimit;
 	}
 
 	public int getCustomerNumber() {
@@ -80,8 +140,7 @@ public class Customer extends Person {
 	}
 
 	public void setPhone(String phone) {
-		if (Utilities.validatePhone(phone)) this.phone = phone;
-		else this.phone = "invalid";
+		this.phone = phone;
 	}
 
 	public String getAddressLine1() {
@@ -89,8 +148,7 @@ public class Customer extends Person {
 	}
 
 	public void setAddressLine1(String addressLine1) {
-		if (Utilities.validateSize(50, addressLine1)) this.addressLine1 = addressLine1;
-		else this.addressLine1 = "invalid. Too long!!";
+		this.addressLine1 = addressLine1;
 	}
 
 	public String getAddressLine2() {
@@ -98,8 +156,7 @@ public class Customer extends Person {
 	}
 
 	public void setAddressLine2(String addressLine2) {
-		if (Utilities.validateSize(50, addressLine2)) this.addressLine2 = addressLine2;
-		else this.addressLine2 = "invalid. Too long!!";
+		this.addressLine2 = addressLine2;
 	}
 
 	public String getCity() {
@@ -107,8 +164,7 @@ public class Customer extends Person {
 	}
 
 	public void setCity(String city) {
-		if (Utilities.validateSize(50, city)) this.city = city;
-		else this.city = "invalid. Too long!!";
+		this.city = city;
 	}
 
 	public String getState() {
@@ -116,8 +172,7 @@ public class Customer extends Person {
 	}
 
 	public void setState(String state) {
-		if (Utilities.validateSize(50, state)) this.state = state;
-		else this.state = "invalid. Too long!!";
+		this.state = state;
 	}
 
 	public String getPostalCode() {
@@ -125,8 +180,7 @@ public class Customer extends Person {
 	}
 
 	public void setPostalCode(String postalCode) {
-		if (Utilities.validateCodePostal(postalCode)) this.postalCode = postalCode;
-		else this.postalCode = "invalid";
+		this.postalCode = postalCode;
 	}
 
 	public String getCountry() {
@@ -134,8 +188,7 @@ public class Customer extends Person {
 	}
 
 	public void setCountry(String country) {
-		if (Utilities.validateSize(50, country)) this.country = country;
-		else this.country = "invalid. Too long!!";
+		this.country = country;
 	}
 
 	public int getSalesRepEmployeeNumber() {
@@ -143,8 +196,7 @@ public class Customer extends Person {
 	}
 
 	public void setSalesRepEmployeeNumber(int salesRepEmployeeNumber) {
-		if (salesRepEmployeeNumber > 0) this.salesRepEmployeeNumber = salesRepEmployeeNumber;
-		else this.salesRepEmployeeNumber = -1; 
+		this.salesRepEmployeeNumber = salesRepEmployeeNumber;
 	}
 
 	public double getCreditlimit() {
@@ -152,8 +204,20 @@ public class Customer extends Person {
 	}
 
 	public void setCreditlimit(double creditLimit) {
-		if (creditLimit > 0) this.creditLimit = creditLimit;
-		else this.creditLimit = 0; 
+		this.creditLimit = creditLimit;
+	}
+	
+	public String toString(){
+		if (this.getState() == null) this.setState("");
+		if (this.getCity() == null) this.setCity("");
+		if (this.getCountry() == null) this.setCountry("");
+		if (this.getAddressLine1() == null) this.setAddressLine1("");
+		if (this.getAddressLine2() == null) this.setAddressLine2("");
+		return this.getCustomerName() + "\n" +
+				this.getAddressLine1() + "\n" +
+				this.getPostalCode() + " " + this.getCity() + "\n" + 
+				this.getState() + " " + this.getCountry() + "\n" +
+				"Phone: " + this.getPhone();
 	}
 }
 

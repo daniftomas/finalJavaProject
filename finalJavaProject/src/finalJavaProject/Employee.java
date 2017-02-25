@@ -21,29 +21,22 @@ public class Employee extends Person {
 	public Employee(String firstName, String lastName, int employeeNumber, String extension, String email, String officeCode, int reportsTo, String jobTitle) {
 		super(firstName, lastName);
 		this.employeeNumber = employeeNumber; 
-		if (Utilities.validateSize(10, extension))this.extension = extension;
-		else this.extension = "invalid";
-		if (Utilities.validateEmail(email))this.email = email;
-		else this.email = "invalid";
-		if (Utilities.validateSize(10, officeCode))this.officeCode = officeCode;
-		else this.officeCode = "invalid";
+		this.extension = extension;
+		this.email = email;
+		this.officeCode = officeCode;
+		this.officeCode = "invalid";
 		this.reportsTo = reportsTo;
-		if (Utilities.validateSize(50, jobTitle))this.jobTitle = jobTitle;
-		else this.jobTitle = "invalid";
+		this.jobTitle = jobTitle;
 	}
 	
 	public Employee(Person p, int employeeNumber, String extension, String email, String officeCode, int reportsTo, String jobTitle) {
 		super(p);
 		this.employeeNumber = employeeNumber; 
-		if (Utilities.validateSize(10, extension))this.extension = extension;
-		else this.extension = "invalid";
-		if (Utilities.validateEmail(email))this.email = email;
-		else this.email = "invalid";
-		if (Utilities.validateSize(10, officeCode))this.officeCode = officeCode;
-		else this.officeCode = "invalid";
+		this.extension = extension;
+		this.email = email;
+		this.officeCode = officeCode;
 		this.reportsTo = reportsTo;
-		if (Utilities.validateSize(50, jobTitle))this.jobTitle = jobTitle;
-		else this.jobTitle = "invalid";
+		this.jobTitle = jobTitle;
 	}
 	
 	public int getEmployeeNumber() {
@@ -94,7 +87,15 @@ public class Employee extends Person {
 	}
 
 	public void setJobTitle(String jobTitle) {
-		if (Utilities.validateSize(50, jobTitle))this.jobTitle = jobTitle;
-		else this.jobTitle = "invalid";
+		this.jobTitle = jobTitle;
 	}
+	
+	public String toString(){
+		return this.getFirstName() + " " + this.getLastName() + "\n "
+				+ "Number: " + this.getEmployeeNumber() + "\n"
+				+ "Job title: " + this.jobTitle + "\n"
+				+ "Office: " + this.getOfficeCode() + "\n"
+				+ "Reports to: ";
+	}
+	
 }
