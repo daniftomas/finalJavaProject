@@ -36,7 +36,7 @@ public class Main {
 		switch (a) {
 
 		case 1:
-			System.out.println("Insert client\n");
+			System.out.println("NEW CLIENT");
 			insertDBCustomer();
 			
 			break;
@@ -95,54 +95,80 @@ public class Main {
 		 }
 		 
 		 }while(fName.length()==0 || fName.length()>50);
+		 client.setFirstName(fName);
+		
 		 
-		 		 
 		 // last name
 		 System.out.println("Insert Last Name Name \n");
 		 do{
-		 fName = Utilities.readString();
+		 lName = Utilities.readString();
 		  
-		 if(fName.length()==0){
+		 if(lName.length()==0){
 			 System.out.println("you may not leave the name in blank.");
 		 }
-		 if(fName.length()>50){
+		 if(lName.length()>50){
 			 System.out.println("you can olnly use 50char");
 		 }
 		 
-		 }while(fName.length()==0 || fName.length()>50);
+		 }while(lName.length()==0 || lName.length()>50);
 		 
+		 client.setLastName(lName);
 		 
 		 // phone
 		 System.out.println("Insert phone \n");
 		 phone = Utilities.insertPhone();
+		 client.setPhone(phone);
 		 
 		 // adressline1
 		 
 		 System.out.println("Insert adressLine 1");
 		 adress1 = Utilities.readString();
+		 client.setAddressLine1(adress1);
 		 
 		 // adressL2
 		 System.out.println("Insert adressLine 2");
 		 adress2 = Utilities.readString();
+		 client.setAddressLine2(adress2);
 		 
 		 // city
 		 System.out.println("Insert city");
 		 city = Utilities.readString();
+		 client.setCity(city);
+		 
 		 // state
 		 System.out.println("Insert state");
 		 state = Utilities.readString();
+		 client.setState(state);
 		 // postalC
 		 System.out.println("Insert postal code");
 		 postalCode = Utilities.readString();
+		 client.setPostalCode(postalCode);
+		 
 		 // country
 		 System.out.println("Insert country");
 		 country = Utilities.readString();
-		 // sales repEmploeeNumber
+		 client.setCountry(country);
 		 
+		 // sales repEmploeeNumber
+		 List<Employee> lu = DataBase.getEmployeesList();
+		   String aux;
+		   System.out.println("Employees List:\n");
+		   for (int i = 0; i < lu.size(); i++) {
+		    aux = ""+(i+1);
+		    System.out.println(aux+". "+lu.get(i).toString());
+		   }
+		 do{
+		   salesRepEmployeeNumber = Utilities.readNumber();
+		   if(salesRepEmployeeNumber> lu.size()){
+			   System.out.println("There are only " + lu.size() + " employees.");
+		   }
+		 }while(salesRepEmployeeNumber<0 || salesRepEmployeeNumber> lu.size());
+	 
 		 
 		 // creditLim	 
 		 System.out.println("Insert Credit limit");
 		 creditLimit = Utilities.readDouble();
+		 client.setCreditlimit(creditLimit);
 		 
 		 
 		
@@ -161,6 +187,5 @@ public class Main {
 		 
 	 }
 	 
-	
 
 }
