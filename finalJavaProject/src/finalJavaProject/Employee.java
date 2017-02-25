@@ -1,7 +1,11 @@
 package finalJavaProject;
 
-public class Employee extends Person {
+public class Employee extends Person implements Comparable<Employee> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int employeeNumber;
 	private String extension;
 	private String email;
@@ -9,8 +13,10 @@ public class Employee extends Person {
 	private int reportsTo;
 	private String jobTitle;
 	
-	public Employee(String firstName, String lastName) {
-		super(firstName, lastName);
+	
+	public Employee() {
+		super("", "");
+		employeeNumber = -1;
 		extension = "";
 		email = "";
 		officeCode = "";
@@ -18,13 +24,34 @@ public class Employee extends Person {
 		jobTitle = "";
 	}
 	
-	public Employee(String firstName, String lastName, int employeeNumber, String extension, String email, String officeCode, int reportsTo, String jobTitle) {
+	public Employee(String firstName, String lastName) {
+		super(firstName, lastName);
+		employeeNumber = -1;
+		extension = "";
+		email = "";
+		officeCode = "";
+		reportsTo = -1;
+		jobTitle = "";
+	}
+	
+	public Employee(int employeeNumber, String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) {
 		super(firstName, lastName);
 		this.employeeNumber = employeeNumber; 
 		this.extension = extension;
 		this.email = email;
 		this.officeCode = officeCode;
-		this.officeCode = "invalid";
+		this.officeCode = "";
+		this.reportsTo = reportsTo;
+		this.jobTitle = jobTitle;
+	}
+	
+	public Employee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) {
+		super(firstName, lastName);
+		this.employeeNumber = -1; 
+		this.extension = extension;
+		this.email = email;
+		this.officeCode = officeCode;
+		this.officeCode = "";
 		this.reportsTo = reportsTo;
 		this.jobTitle = jobTitle;
 	}
@@ -52,8 +79,7 @@ public class Employee extends Person {
 	}
 
 	public void setExtension(String extension) {
-		if (Utilities.validateSize(10, extension))this.extension = extension;
-		else this.extension = "invalid";
+		this.extension = extension;
 	}
 
 	public String getEmail() {
@@ -61,8 +87,7 @@ public class Employee extends Person {
 	}
 
 	public void setEmail(String email) {
-		if (Utilities.validateEmail(email)) this.email = email;
-		else this.email = "invalid";
+		this.email = email;
 	}
 
 	public String getOfficeCode() {
@@ -70,8 +95,7 @@ public class Employee extends Person {
 	}
 
 	public void setOfficeCode(String officeCode) {
-		if (Utilities.validateSize(10, officeCode))this.officeCode = officeCode;
-		else this.officeCode = "invalid";
+		this.officeCode = officeCode;
 	}
 
 	public int getReportsTo() {
@@ -91,11 +115,24 @@ public class Employee extends Person {
 	}
 	
 	public String toString(){
-		return this.getFirstName() + " " + this.getLastName() + "\n "
+		String of = this.officeCode;
+		if (this.getOfficeCode().equals("")) of = "N/A";
+		String ff = this.getFirstName() + " " + this.getLastName() + "\n"
 				+ "Number: " + this.getEmployeeNumber() + "\n"
 				+ "Job title: " + this.jobTitle + "\n"
-				+ "Office: " + this.getOfficeCode() + "\n"
-				+ "Reports to: ";
+				+ "Office: " + of + "\n";
+		if (this.getReportsTo() > 0) {
+			Employee report = DataBase.getEmployeeByNumber(this.getReportsTo());
+			ff += "Reports to: " + report.getFirstName() + " " + report.getLastName();
+		}
+		return ff;
+		
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

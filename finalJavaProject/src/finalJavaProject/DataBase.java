@@ -1,6 +1,7 @@
 package finalJavaProject;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -132,6 +133,57 @@ public class DataBase {
 			}
 		}
 		return offices;
+	}
+	
+	public static List<Employee> getEmployeesList() {
+		Employee empregado = new Employee();
+		List<Employee> emps = new ArrayList<>();
+		String firstName;
+		String lastName;
+		int employeeNumber;
+		String extension;
+		String email;
+		String officeCode;
+		int reportsTo;
+		String jobTitle;
+		Statement smt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql = "SELECT firstName, lastName, employeeNumber, extension, email, officeCode, reportsTo, jobTitle from Employees;";
+			ResultSet rs = smt.executeQuery(sql);
+			while (rs.next()) {
+				firstName = rs.getString("firstName");
+				lastName = rs.getString("lastName");
+				employeeNumber = rs.getInt("employeeNumber");
+				email = rs.getString("email");
+				extension = rs.getString("extension"); 
+				officeCode = rs.getString("officeCode");
+				reportsTo = rs.getInt("reportsTo");
+				jobTitle = rs.getString("jobTitle");
+				empregado = new Employee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
+				emps.add(empregado);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return emps;
 	}
 
 	// permite obter uma lista de clientes
@@ -323,93 +375,100 @@ public class DataBase {
 
 	// permite obter as orders / encomendas do cliente
 	public static List<Order> getOrders(Customer cliente) {
-		  Order order = null;
-		  OrderDetail orderdetail = null;
-		  List<Order> orders = new ArrayList<>();
-		  int orderNumber;
-		  String orderDate;
-		  String requireDate;
-		  String shippedDate;
-		  Order.Status status;
-		  String ss;
-		  String comments;
-		  int customerNumber;
-		  String productCode;
-		  int quantityOrder;
-		  double priceEach;
-		  int orderLineNumber;
-		  Statement smt = null;
-		  Statement smt2 = null;
-		  try {
-		   Class.forName("org.sqlite.JDBC");
-		   c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
-		   smt = c.createStatement();
-		   ResultSet rs2;
-		   String sql = "SELECT orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber from Orders where customerNumber = "
-		     + cliente.getCustomerNumber() + ";";
-		   ResultSet rs = smt.executeQuery(sql);
-		   LocalDate ldate1;
-		   LocalDate ldate2;
-		   LocalDate ldate3; 
-		   String [] auxiliar;
-		   while (rs.next()) {
-		    orderNumber = rs.getInt("orderNumber");
-		    orderDate = rs.getString("orderDate");
-		    auxiliar = orderDate.split("/"); 
-		    ldate1 = LocalDate.of(Integer.parseInt(auxiliar[0]), Integer.parseInt(auxiliar[1]), Integer.parseInt(auxiliar[2]));
-		    requireDate = rs.getString("requiredDate");
-		    auxiliar = requireDate.split("/");
-		    ldate2 = LocalDate.of(Integer.parseInt(auxiliar[0]), Integer.parseInt(auxiliar[1]), Integer.parseInt(auxiliar[2]));
-		    shippedDate = rs.getString("shippedDate");
-		    auxiliar = shippedDate.split("/");
-		    ldate3 = LocalDate.of(Integer.parseInt(auxiliar[0]), Integer.parseInt(auxiliar[1]), Integer.parseInt(auxiliar[2]));
-		    ss = rs.getString("status");
-		    if (Order.Status.finished.toString().equals(ss)) {
-		     status = Status.finished;
-		    } else if (Order.Status.inProgress.toString().equals(ss)) {
-		     status = Status.inProgress;
-		    } else {
-		     status = Status.waiting;
-		    }
-		    comments = rs.getString("comments");
-		    customerNumber = rs.getInt("customerNumber");
-		    order = new Order(orderNumber, ldate1, ldate2, ldate3, status, comments, customerNumber);
-		    smt2 = c.createStatement();
-		    sql = "select productCode, quantityOrdered, priceEach, orderLineNumber from OrderDetails where orderNumber = "
-		      + orderNumber + ";";
-		    rs2 = smt2.executeQuery(sql);
-		    if (rs2.next()) {
-		     productCode = rs2.getString("productCode");
-		     quantityOrder = rs2.getInt("quantityOrdered");
-		     priceEach = rs2.getDouble("priceEach");
-		     orderLineNumber = rs2.getInt("OrderLineNumber");
-		     orderdetail = new OrderDetail(order, productCode, quantityOrder, priceEach, orderLineNumber);
-		     orders.add(orderdetail);
-		    } else {
-		     orders.add(order);
-		    }
-		    smt2.close();
-		   }
-		  } catch (ClassNotFoundException | SQLException e) {
-		   e.printStackTrace();
-		  } finally {
-		   if (smt != null) {
-		    try {
-		     smt.close();
-		    } catch (SQLException e) {
-		     e.printStackTrace();
-		    }
-		   }
-		   if (c != null) {
-		    try {
-		     c.close();
-		    } catch (SQLException e) {
-		     e.printStackTrace();
-		    }
-		   }
-		  }
-		  return orders;
-		 }
+		Order order = null;
+		OrderDetail orderdetail = null;
+		List<Order> orders = new ArrayList<>();
+		int orderNumber;
+		String orderDate;
+		String requireDate;
+		String shippedDate;
+		Order.Status status;
+		String ss;
+		String comments;
+		int customerNumber;
+		String productCode;
+		int quantityOrder;
+		double priceEach;
+		int orderLineNumber;
+		Statement smt = null;
+		Statement smt2 = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			ResultSet rs2;
+			int clienteID = -1;
+			if (cliente.getCustomerNumber() <= 0) {
+				clienteID = DataBase.getCustomerID(cliente);
+			} else {
+				clienteID = cliente.getCustomerNumber();
+			}
+			System.out.println("ID: "+ clienteID);
+			String sql = "SELECT orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber from Orders where customerNumber = "
+					+ clienteID + ";";
+			ResultSet rs = smt.executeQuery(sql);
+			LocalDate ldate1;
+			LocalDate ldate2;
+			LocalDate ldate3; 
+			String [] auxiliar;
+			while (rs.next()) {
+				orderNumber = rs.getInt("orderNumber");
+				orderDate = rs.getString("orderDate");
+				auxiliar = orderDate.split("/");
+				ldate1 = LocalDate.of(Integer.parseInt(auxiliar[0]), Integer.parseInt(auxiliar[1]), Integer.parseInt(auxiliar[2]));
+				requireDate = rs.getString("requiredDate");
+				auxiliar = requireDate.split("/");
+				ldate2 = LocalDate.of(Integer.parseInt(auxiliar[0]), Integer.parseInt(auxiliar[1]), Integer.parseInt(auxiliar[2]));
+				shippedDate = rs.getString("shippedDate");
+				auxiliar = shippedDate.split("/");
+				ldate3 = LocalDate.of(Integer.parseInt(auxiliar[0]), Integer.parseInt(auxiliar[1]), Integer.parseInt(auxiliar[2]));
+				ss = rs.getString("status");
+				if (Order.Status.finished.toString().equals(ss)) {
+					status = Status.finished;
+				} else if (Order.Status.inProgress.toString().equals(ss)) {
+					status = Status.inProgress;
+				} else {
+					status = Status.waiting;
+				}
+				comments = rs.getString("comments");
+				customerNumber = rs.getInt("customerNumber");
+				order = new Order(orderNumber, ldate1, ldate2, ldate3, status, comments, customerNumber);
+				smt2 = c.createStatement();
+				sql = "select productCode, quantityOrdered, priceEach, orderLineNumber from OrderDetails where orderNumber = "
+						+ orderNumber + ";";
+				rs2 = smt2.executeQuery(sql);
+				if (rs2.next()) {
+					productCode = rs2.getString("productCode");
+					quantityOrder = rs2.getInt("quantityOrdered");
+					priceEach = rs2.getDouble("priceEach");
+					orderLineNumber = rs2.getInt("OrderLineNumber");
+					orderdetail = new OrderDetail(order, productCode, quantityOrder, priceEach, orderLineNumber);
+					orders.add(orderdetail);
+				} else {
+					orders.add(order);
+				}
+				smt2.close();
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return orders;
+	}
 
 	// Insere um cliente na base de dados
 	public static int insertCustomer(Customer customer) {
@@ -547,8 +606,7 @@ public class DataBase {
 			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
 			smt = c.createStatement();
 			smt2 = c.createStatement();
-			ResultSet rs = smt2
-					.executeQuery("select count(*) from products where productCode = '" + prod.getProductCode() + "';");
+			ResultSet rs = smt2.executeQuery("select count(*) from products where productCode = '" + prod.getProductCode() + "';");
 			if (!rs.next() || (rs.getInt(1) == 0)) {
 				String sql = "insert into Products(productCode, productName, productline,"
 						+ "productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP) values ('"
@@ -696,5 +754,82 @@ public class DataBase {
 		return true;
 	}
 	
+	public static int getEmployeeNumber(Employee emp){
+		Statement smt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql = "select employeeNumber from Employees where lastName = '" + emp.getLastName()
+					+ "' and " + "firstName = '" + emp.getFirstName() + "' and extension = '"
+					+ emp.getExtension() + "' and" + " email = '" + emp.getEmail() + "' and officeCode = "
+					+ emp.getOfficeCode() + " and " + "reportsTo = " + emp.getReportsTo() + " and jobTitle = '"
+					+ emp.getJobTitle() + "';";
+			ResultSet rs = smt.executeQuery(sql);
+			if (rs.next()) {
+				return rs.getInt(1);
+			} else {
+				return 0;
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
+	public static Employee getEmployeeByNumber(int num){
+		Statement smt = null;
+		Employee emp = new Employee();
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql = "select firstName, lastName, extension, email, officeCode, reportsTo, jobTitle from Employees where employeeNumber = "+num; 
+			ResultSet rs = smt.executeQuery(sql);
+			if (rs.next()) {
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String extension = rs.getString("extension");
+				String email = rs.getString("firstName");
+				String officeCode = rs.getString("officeCode");
+				int reportsTo = rs.getInt("reportsTo");
+				String jobTitle = rs.getString("jobTitle");
+				emp = new Employee(firstName,lastName, extension, email, officeCode, reportsTo, jobTitle);
+				smt.executeUpdate(sql);
+			} 
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return emp;
+	}
 }
