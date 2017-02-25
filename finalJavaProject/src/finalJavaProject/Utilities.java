@@ -70,6 +70,75 @@ public class Utilities {
 		return x;
 	}
 	
+	public static String readString(){
+		String st ="";
+		Scanner a;
+		
+		a = new Scanner(System.in);
+		st = a.nextLine();	
+		return st;
+		
+	}
+	
+	public static int readDouble() {
+
+		Scanner a;
+		int x = 0;
+		boolean badN=true;
+		
+		do {
+			a = new Scanner(System.in);
+			if (!a.hasNextDouble()) {
+				System.out.println("Choose a positive number.");
+				
+			} else {
+				x = Integer.parseInt(a.nextLine());
+				if (x < 0) {
+					System.out.println("Positive numbers only.");
+				}
+				else{
+					badN=false;
+				}
+			}
+
+		} while ( x < 0 || badN);
+
+		return x;
+	}
+	
+public static String insertPhone(){
+		
+		boolean x=false;
+		String phone;
+		
+		do{
+		phone = readString();
+		x=validatePhone(phone);
+		if(!x){
+			System.out.println("phone number not valid");
+		}
+		
+		}while(!x);
+		
+		return phone;
+	}
+
+	public static String insertPostalCode() {
+
+		boolean x = false;
+		String postalCode;
+
+		do {
+			postalCode = readString();
+			x = validateCodePostal(postalCode);
+			if (!x) {
+				System.out.println("phone number not valid");
+			}
+
+		} while (!x);
+
+		return postalCode;
+	}
 	
 	
 }

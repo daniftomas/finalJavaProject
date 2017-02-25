@@ -1,5 +1,7 @@
 package finalJavaProject;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -34,8 +36,9 @@ public class Main {
 		switch (a) {
 
 		case 1:
-			System.out.println("Insert client:\n");
-
+			System.out.println("Insert client\n");
+			insertDBCustomer();
+			
 			break;
 		case 2:
 			System.out.println("cenas2\n");
@@ -50,7 +53,7 @@ public class Main {
 			System.out.println("cenas5\n");
 			break;
 		case 0:
-			System.out.println("You are OUT*\n");
+			System.out.println("You are OUT*\n\n");
 			break;
 
 		default:
@@ -61,14 +64,103 @@ public class Main {
 	}
 
 	
-	/*
-	 public Customer insertCustomer(){
+	
+	 public static void insertDBCustomer(){
 		 
+		 int x;
 		 Customer client = new Customer();
+		 String fName;
+		 String lName;
+		 String phone;
+		 String adress1;
+		 String adress2;
+		 String city;
+		 String state;
+		 String country;
+		 String postalCode;
+		 int salesRepEmployeeNumber;
+		 double creditLimit;
 		 
-		 return 
+		 
+		 // fisrt name
+		 System.out.println("Insert Firt Name \n");
+		 do{
+		 fName = Utilities.readString();
+		  
+		 if(fName.length()==0){
+			 System.out.println("you may not leave the name in blank.");
+		 }
+		 if(fName.length()>50){
+			 System.out.println("you can olnly use 50char");
+		 }
+		 
+		 }while(fName.length()==0 || fName.length()>50);
+		 
+		 		 
+		 // last name
+		 System.out.println("Insert Last Name Name \n");
+		 do{
+		 fName = Utilities.readString();
+		  
+		 if(fName.length()==0){
+			 System.out.println("you may not leave the name in blank.");
+		 }
+		 if(fName.length()>50){
+			 System.out.println("you can olnly use 50char");
+		 }
+		 
+		 }while(fName.length()==0 || fName.length()>50);
+		 
+		 
+		 // phone
+		 System.out.println("Insert phone \n");
+		 phone = Utilities.insertPhone();
+		 
+		 // adressline1
+		 
+		 System.out.println("Insert adressLine 1");
+		 adress1 = Utilities.readString();
+		 
+		 // adressL2
+		 System.out.println("Insert adressLine 2");
+		 adress2 = Utilities.readString();
+		 
+		 // city
+		 System.out.println("Insert city");
+		 city = Utilities.readString();
+		 // state
+		 System.out.println("Insert state");
+		 state = Utilities.readString();
+		 // postalC
+		 System.out.println("Insert postal code");
+		 postalCode = Utilities.readString();
+		 // country
+		 System.out.println("Insert country");
+		 country = Utilities.readString();
+		 // sales repEmploeeNumber
+		 
+		 
+		 // creditLim	 
+		 System.out.println("Insert Credit limit");
+		 creditLimit = Utilities.readDouble();
+		 
+		 
+		 /*
+		 
+		 x= DataBase.insertCustomer(client);
+		 
+		 if (x==0){
+			 System.out.println("Client already exists");
+		 }
+		 if (x==-1){
+			 System.out.println("There was a problem with the connection");
+		 }
+		 else{
+			 System.out.println("Client created successfully");
+		 }
+		 */
 	 }
 	 
-	 */
+	
 
 }

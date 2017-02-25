@@ -2,7 +2,7 @@ package finalJavaProject;
 
 import java.io.Serializable;
 
-public class Customer extends Person implements Serializable{
+public class Customer extends Person implements Serializable, Comparable<Customer>{
 	
 	/**
 	 * 
@@ -208,16 +208,38 @@ public class Customer extends Person implements Serializable{
 	}
 	
 	public String toString(){
-		if (this.getState() == null) this.setState("");
-		if (this.getCity() == null) this.setCity("");
-		if (this.getCountry() == null) this.setCountry("");
-		if (this.getAddressLine1() == null) this.setAddressLine1("");
-		if (this.getAddressLine2() == null) this.setAddressLine2("");
-		return this.getCustomerName() + "\n" +
-				this.getAddressLine1() + "\n" +
-				this.getPostalCode() + " " + this.getCity() + "\n" + 
-				this.getState() + " " + this.getCountry() + "\n" +
+		if (this.getState().equals("")) state = "N/A";
+		if (this.getCity().equals("")) city = "N/A";
+		if (this.getCountry().equals("")) country = "N/A";
+		if (this.getAddressLine1().equals("")) addressLine1 = "N/A";
+		if (this.getAddressLine2().equals("")) addressLine2 = "N/A";
+		return "Name: "+ this.getCustomerName() + "\n" +
+				"Address: " + this.getAddressLine1() + "\n" +
+				"Address2: " + this.getAddressLine2() + "\n" +
+				"Postal Code: " + this.getPostalCode() + "\n" +
+				"City: " + this.getCity() + "\n" + 
+				"State: " + this.getState() + " " + "\n" +
+				"Country: "+ this.getCountry() + "\n" +
 				"Phone: " + this.getPhone();
+	}
+
+	@Override
+	public int compareTo(Customer o) {
+		int val = 0;
+		if ((val = this.getCustomerName().compareTo(o.getCustomerName())) == 0) {
+			if ((val = this.getCity().compareTo(o.getCity())) == 0) {
+				if ((val = this.getState().compareTo(o.getState())) == 0) {
+					if ((val = this.getCountry().compareTo(o.getCountry())) == 0) {
+						if ((val = this.getAddressLine1().compareTo(o.getAddressLine1())) == 0) {
+							if ((val = this.getAddressLine2().compareTo(o.getAddressLine2())) == 0) {
+								val = this.getPhone().compareTo(o.getPhone());
+							}
+						}
+					}
+				}
+			}
+		}
+		return val;
 	}
 }
 
