@@ -5,61 +5,70 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		
-		
-		//Main menu
-		System.out.println("BEAUTIFUL MAIN \n"
-				+ "1-> Register new client \n"
-				+ "2-> Make new order \n"
-				+ "3-> View customer list\n"
-				+ "4-> Print list of customer orders \n"
-				+ "5-> Import list of new employees \n");
-		
-		//Read and choose
+
 		int choice;
-		do{
-			System.out.println("vamos ler um num");
-		choice = Utilities.readNumber();
-		mainMenu(choice);
-	
-		if (choice<1 || choice>5){
-			System.out.println("Choose a number between 1 and 5.");
-		}
-		}while(choice<1 || choice>5);
-		
-		
+
+		do {
+			// Main menu
+			System.out.println("   **BEAUTIFUL MAIN** \n" 
+					+ "1-> Register new client \n" 
+					+ "2-> Make new order \n"
+					+ "3-> View customer list\n" 
+					+ "4-> Print list of customer orders \n"
+					+ "5-> Import list of new employees \n" 
+					+ "0-> Out!");
+
+			// Read and choose
+			do {
+				System.out.println("Choose a number.");
+				choice = Utilities.readNumber();
+				mainOptions(choice);
+			} while (choice < 0 || choice > 5);
+		} while (choice != 0);
+
 	}
-	
 
-	//choose case from main menu
-	public static void mainMenu(int a) {
+	// choose case from main menu
+	public static void mainOptions(int a) {
 
-		
 		switch (a) {
+
 		case 1:
-			System.out.println("cenas1");
+			System.out.println("Insert client:\n");
+
 			break;
 		case 2:
-			System.out.println("cenas2");
+			System.out.println("cenas2\n");
 			break;
 		case 3:
-			System.out.println("cenas3");
+			System.out.println("cenas3\n");
 			break;
 		case 4:
-			System.out.println("cenas4");
+			System.out.println("cenas4\n");
 			break;
 		case 5:
-			System.out.println("cenas5");
+			System.out.println("cenas5\n");
 			break;
-			
+		case 0:
+			System.out.println("You are OUT*\n");
+			break;
+
 		default:
-			System.out.println("escolhe outro pá");
+			System.out.println("Choose a number between 0 and 5.");
 			break;
 		}
 
 	}
+
 	
-	
+	/*
+	 public Customer insertCustomer(){
+		 
+		 Customer client = new Customer();
+		 
+		 return 
+	 }
+	 
+	 */
 
 }
