@@ -145,7 +145,7 @@ public class Main {
 		 creditLimit = Utilities.readDouble();
 		 
 		 
-		 /*
+		
 		 
 		 x= DataBase.insertCustomer(client);
 		 
@@ -158,7 +158,7 @@ public class Main {
 		 else{
 			 System.out.println("Client created successfully");
 		 }
-		 */
+		 
 	 }
 	 
 	
