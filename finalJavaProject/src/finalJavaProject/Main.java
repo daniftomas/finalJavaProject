@@ -49,17 +49,16 @@ public class Main {
 			
 			break;
 		case 2:
-			System.out.println("NEW ORDER");
+			insertNewOrder();
 			break;
 		case 3:
 			printCustomerList();
 			break;
 		case 4:
-			System.out.println("cenas4\n");
 			exportClientsListToTXT();
 			break;
 		case 5:
-			System.out.println("cenas5\n");
+			importClientsFromBinaryDocument();
 			break;
 		case 0:
 			System.out.println("You are OUT*\n\n");
@@ -214,6 +213,7 @@ public class Main {
 		   
 		 }while(salesRepEmployeeNumber> lu.size());
 	 
+		 client.setSalesRepEmployeeNumber(lu.get(salesRepEmployeeNumber-1).getEmployeeNumber());
 		 
 		 // creditLim	 
 		 System.out.println("Insert Credit limit");
@@ -250,6 +250,15 @@ public class Main {
 		 double preco;
 		 int orderLineNumber;
 		 
+		 //choose client
+		 do{
+		 cust = pickCustomer();
+		 if(cust==null){
+			 System.out.println("customer not valid.");
+		 }
+		 }while(cust==null);
+		 
+		 System.out.println(cust);
 		 
 		 //today date
 		 date = LocalDate.now();
@@ -260,7 +269,13 @@ public class Main {
 		 //shipped date
 		 shippedDate = Utilities.insertLD();
 		
+		 //status
+		 status = Order.Status.waiting;
 		 
+		 //
+		 comments = Utilities.readString();
+		 
+		 //choose products
 		 
 		 
 		 
@@ -274,6 +289,64 @@ public class Main {
 		 
 	 }
 	 
+	 
+	 public static Customer pickCustomer(){
+			String vv = "";
+			System.out.println();
+			System.out.println("Choose one of this options:\n (s)-search\n (l)-list customers \n (x)-to exit.");
+			vv = Utilities.readString();
+			if (vv.equals("x")) {
+				System.out.println();
+				return null;
+			} else if (vv.equals("l")) {
+				List<Customer> l = DataBase.getCustomerList();
+				String cust;
+				System.out.println("******* Customer's List ******* \n");
+				for (int i = 0; i < l.size(); i++) {
+					cust = "" + (i + 1);
+					System.out.println(cust + ". " + l.get(i).toString());
+				}
+				System.out.print("Choose a client (number): (x) to exit ");
+				boolean passou = false;
+				int b = 0;
+				String g = "";
+				do {
+					if (passou) {
+						System.out.print("Invalid number, choose another: (x) to exit ");
+					}
+					g = Utilities.readString();
+					if (g.equals("x")) {
+						System.out.println();
+						return null;
+					}
+					try 
+						{
+						b = Integer.parseInt(g);
+					} catch (NumberFormatException e) {}
+				} while ((b <= 0)||(b > l.size()));
+				return l.get(b-1);
+			} else {
+				System.out.print("Write is phone or is addressLine: (x) to exit ");
+				boolean passou = false;
+				String valor = "";
+				do {
+					if (passou) {
+						System.out.print("Wrong phone or addressLine, write again: (x) to exit ");
+					}
+					valor = Utilities.readString();
+					passou = true;
+					if (Utilities.validateEmail(valor)) {
+						System.out.println();
+						return DataBase.getCustomer("", valor);
+					} else if (Utilities.validatePhone(valor)){
+						System.out.println();
+						return DataBase.getCustomer(valor, "");
+					}	 
+				} while (!valor.equals("x"));
+			}
+			return null;
+		}
+
 	 
 	 //OPTION 3
 	 public static void printCustomerList(){

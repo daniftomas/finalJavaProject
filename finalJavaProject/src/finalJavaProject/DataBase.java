@@ -301,6 +301,134 @@ public class DataBase {
 		}
 		return customer;
 	}
+	
+	
+	public static Customer getCustomer(String phone, String addressLine1) {
+		Customer customer = null;
+		List<Customer> customers = new ArrayList<>();
+		int customerNumber;
+		String firstName;
+		String lastName;
+		String addressLine2;
+		String city;
+		String state;
+		String country;
+		String postalCode;
+		int salesRepEmployeeNumber;
+		double creditLimit;
+		Statement smt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql;
+			if ((addressLine1 == null)&&(phone == null)) return null;
+			if ((addressLine1.equals(""))&&(phone.equals(""))) return null;
+			if ((phone == null)||(phone.equals(""))) {
+				sql = "SELECT customerNumber, contactFirstName, contactLastName, addressLine1, addressLine2, postalCode, city, country, state, salesRepEmployeeNumber, creditLimit from Customers where addressLine1 = '"+addressLine1+"';";
+			} else if ((addressLine1 == null)||(addressLine1.equals(""))) {
+				sql = "SELECT customerNumber, contactFirstName, contactLastName, addressLine1, addressLine2, postalCode, city, country, state, salesRepEmployeeNumber, creditLimit from Customers where phone = '"+phone+"';";
+			} else {
+				sql = "SELECT customerNumber, contactFirstName, contactLastName, addressLine1, addressLine2, postalCode, city, country, state, salesRepEmployeeNumber, creditLimit from Customers where phone = '"+phone+"'"
+						+ "and addressLine1 = '"+addressLine1+"';";
+			}
+			ResultSet rs = smt.executeQuery(sql);
+			if (rs.next()) {
+				firstName = rs.getString("contactFirstName");
+				lastName = rs.getString("contactLastName");
+				customerNumber = rs.getInt("customerNumber");
+				addressLine1 = rs.getString("addressLine1");
+				addressLine2 = rs.getString("addressLine2");
+				state = rs.getString("state");
+				country = rs.getString("country");
+				postalCode = rs.getString("postalCode");
+				city = rs.getString("city");
+				salesRepEmployeeNumber = rs.getInt("salesRepEmployeeNumber");
+				creditLimit = rs.getDouble("creditLimit");
+				customer = new Customer(firstName, lastName, customerNumber, phone, addressLine1, addressLine2, city,
+						state, postalCode, country, salesRepEmployeeNumber, creditLimit);
+				customers.add(customer);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return customer;
+	}
+	
+	public static Customer getCustomer(int number) {
+		Customer customer = null;
+		List<Customer> customers = new ArrayList<>();
+		int customerNumber;
+		String firstName;
+		String lastName;
+		String addressLine2;
+		String addressLine1;
+		String phone;
+		String city;
+		String state;
+		String country;
+		String postalCode;
+		int salesRepEmployeeNumber;
+		double creditLimit;
+		Statement smt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql = "SELECT customerNumber, contactFirstName, contactLastName, addressLine1, addressLine2, phone, postalCode, city, country, state, salesRepEmployeeNumber, creditLimit from Customers where customerNumber = "+number+";";
+			ResultSet rs = smt.executeQuery(sql);
+			if (rs.next()) {
+				firstName = rs.getString("contactFirstName");
+				lastName = rs.getString("contactLastName");
+				customerNumber = rs.getInt("customerNumber");
+				addressLine1 = rs.getString("addressLine1");
+				addressLine2 = rs.getString("addressLine2");
+				state = rs.getString("state");
+				country = rs.getString("country");
+				postalCode = rs.getString("postalCode");
+				city = rs.getString("city");
+				salesRepEmployeeNumber = rs.getInt("salesRepEmployeeNumber");
+				creditLimit = rs.getDouble("creditLimit");
+				phone = rs.getString("phone");
+				customer = new Customer(firstName, lastName, customerNumber, phone, addressLine1, addressLine2, city,
+						state, postalCode, country, salesRepEmployeeNumber, creditLimit);
+				customers.add(customer);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return customer;
+	}
 
 	// permite obter uma lista de offices a partir de um tipo de pesquisa e uma
 	// String de pesquisa
