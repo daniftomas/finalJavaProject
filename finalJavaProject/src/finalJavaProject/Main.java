@@ -250,11 +250,16 @@ public class Main {
 		 double preco;
 		 int orderLineNumber;
 		 
+		 
+		 //today date
 		 date = LocalDate.now();
 		 
+		 //required date
 		 requiredDate = Utilities.insertLD();
 		 
-		 
+		 //shipped date
+		 shippedDate = Utilities.insertLD();
+		
 		 
 		 
 		 
@@ -298,6 +303,10 @@ public class Main {
 			}
 		}
 
+		
+		
+		
+		//option 5
 		public static void importClientsFromBinaryDocument() {
 			String x = "y";
 			System.out.print("Do you need to create customers first? (y/n/x to e(x)it)\n");
@@ -488,8 +497,6 @@ public class Main {
 				} while (!fil.isFile());
 			}
 		}
-		
-		//option 5
 	 
 
 }

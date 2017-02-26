@@ -155,16 +155,16 @@ public static LocalDate insertLD(){
 	Scanner year = new Scanner(System.in);
 	Scanner month = new Scanner(System.in);
 	Scanner day = new Scanner(System.in);
-	String x = year.nextLine();
-	String y = month.nextLine();
-	if (y.length() == 1) {
-		y = "0" + y;
+	String y = year.nextLine();
+	String m = month.nextLine();
+	if (m.length() == 1) {
+		m = "0" + m;
 	}
-	String z = day.nextLine();
-	if (z.length() == 1) {
-		z = "0" + z;
+	String d = day.nextLine();
+	if (d.length() == 1) {
+		d = "0" + d;
 	}
-	String temp = x + "/" + y + "/" + z;
+	String temp = y + "/" + m + "/" + d;
 	System.out.println(temp);
 
 		LocalDate tempo = LocalDate.parse(temp, format);
