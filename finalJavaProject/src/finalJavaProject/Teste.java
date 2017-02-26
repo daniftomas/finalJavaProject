@@ -39,14 +39,14 @@ public class Teste {
 		Customer c = new Customer("Maria","Albertina","456789987","Rua Latino 45","Travessa Bernardino Machado", "Coimbra", "Beira Litoral", "3456-456","Portugal",-1,23.89);
 		DataBase.insertCustomer(c);
 		DataBase.insertCustomersByBinaryFile(FileIO.BINARYFILE);
-		LocalDateTime tim = LocalDateTime.now();
-		LocalDateTime tim2 = LocalDateTime.of(2017, 02, 27, 11, 30);
-		LocalDateTime tim3 = LocalDateTime.of(2017, 02, 27, 11, 30);
+		//LocalDateTime tim = LocalDateTime.now();
+		//LocalDateTime tim2 = LocalDateTime.of(2017, 02, 27, 11, 30);
+		//LocalDateTime tim3 = LocalDateTime.of(2017, 02, 27, 11, 30);
 		
 		Product produto = new Product("prod123","Toshiba R700","line1","scal2", "vendor3", "qq coisa", 23,702.45,1.56);
 		DataBase.insertProduct(produto);
 		Order.Status st = Status.inProgress;
-		DataBase.insertOrder(cust.get(0), tim, tim2, tim3, st, "qq coisa", produto, 23, 2.3, 2);
+		//DataBase.insertOrder(cust.get(0), tim, tim2, tim3, st, "qq coisa", produto, 23, 2.3, 2);
 		
 	}
 

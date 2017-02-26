@@ -1,5 +1,7 @@
 package finalJavaProject;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -37,15 +39,15 @@ public class Main {
 
 		case 1:
 			System.out.println("NEW CLIENT");
-			insertDBCustomer();
+			//insertDBCustomer();
 			
 			break;
 		case 2:
-			System.out.println("cenas2\n");
+			System.out.println("NEW ORDER");
 			break;
 		case 3:
 			System.out.println("cenas3\n");
-			printCustomerList();
+			//printCustomerList();
 			break;
 		case 4:
 			System.out.println("cenas4\n");
@@ -229,6 +231,35 @@ public class Main {
 	 }
 	 
 	 //OPTION 2
+	 public static void insertNewOrder(){
+		 
+		 boolean validInsert;
+		 Customer cust = new Customer();
+		 LocalDate date;
+		 LocalDate requiredDate;
+		 LocalDate shippedDate;
+		 Order.Status status;
+		 String comments;
+		 Product produto;
+		 int quantidade;
+		 double preco;
+		 int orderLineNumber;
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 //validInsert = DataBase.insertOrder(cust, date, requiredDate,
+		 //			shippedDate, status,comments,produto, quantidade,
+	     //		preco,orderLineNumber);
+		 
+		 
+		 
+		 
+		 
+	 }
 	 
 	 
 	 //OPTION 3
@@ -251,6 +282,11 @@ public class Main {
 	 public static void exportCustomerOrderList(){
 		 
 		 Customer cliente = new Customer();
+		 
+		 
+	 }
+	 
+	 public static void importListEmployees(){
 		 
 		 
 	 }

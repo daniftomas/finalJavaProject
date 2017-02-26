@@ -689,8 +689,8 @@ public class DataBase {
 	}
 
 	// Insere uma encomenda
-	public static boolean insertOrder(Customer cust, LocalDateTime date, LocalDateTime requiredDate,
-			LocalDateTime shippedDate, Order.Status status, String comments, Product produto, int quantidade,
+	public static boolean insertOrder(Customer cust, LocalDate date, LocalDate requiredDate,
+			LocalDate shippedDate, Order.Status status, String comments, Product produto, int quantidade,
 			double preco, int orderLineNumber) {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		Statement smt = null;
