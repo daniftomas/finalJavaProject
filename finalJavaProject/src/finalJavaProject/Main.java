@@ -16,7 +16,7 @@ public class Main {
 					+ "1-> Register new client \n" 
 					+ "2-> Make new order \n"
 					+ "3-> View customer list\n" 
-					+ "4-> Print list of customer orders \n"
+					+ "4-> Print list of customer's orders \n"
 					+ "5-> Import list of new employees \n" 
 					+ "0-> Out!");
 
@@ -48,6 +48,7 @@ public class Main {
 			break;
 		case 4:
 			System.out.println("cenas4\n");
+			printCustomerList();
 			break;
 		case 5:
 			System.out.println("cenas5\n");
@@ -64,6 +65,8 @@ public class Main {
 	}
 
 	
+	
+	//OPTION 1
 	
 	 public static void insertDBCustomer(){
 		 
@@ -189,11 +192,11 @@ public class Main {
 		 
 		 // sales repEmploeeNumber
 		 List<Employee> lu = DataBase.getEmployeesList();
-		   String aux;
+		   String employee;
 		   System.out.println("Employees List:\n");
 		   for (int i = 0; i < lu.size(); i++) {
-		    aux = ""+(i+1);
-		    System.out.println(aux+". "+lu.get(i).toString());
+		    employee = ""+(i+1);
+		    System.out.println(employee+". "+lu.get(i).toString());
 		   }
 		 do{
 		   salesRepEmployeeNumber = Utilities.readNumber();
@@ -213,14 +216,42 @@ public class Main {
 		 x= DataBase.insertCustomer(client);
 		 
 		 if (x==0){
-			 System.out.println("Client already exists");
+			 System.out.println("Client already exists \n");
 		 }
 		 if (x==-1){
-			 System.out.println("There was a problem with the connection");
+			 System.out.println("There was a problem with the connection\n");
 		 }
 		 else{
-			 System.out.println("Client created successfully");
+			 System.out.println("Client created successfully\n");
 		 }
+		 
+	 }
+	 
+	 //OPTION 2
+	 
+	 
+	 //OPTION 3
+	 public static void printCustomerList(){
+		 
+		 List<Customer> l = DataBase.getCustomerList();
+		   String cust;
+		   System.out.println("Customer's List:\n");
+		   for (int i = 0; i < l.size(); i++) {
+		    cust = ""+(i+1);
+		    System.out.println(cust+". "+l.get(i).toString());
+		   }
+		 
+	 }
+	 
+	 
+	 
+	 
+	 //OPTION 4
+	 public static void exportCustomerOrderList(){
+		 
+		 Customer cliente = new Customer();
+		 
+		 List<Order> orders = DataBase.getOrders(cliente);
 		 
 	 }
 	 
