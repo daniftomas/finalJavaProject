@@ -83,7 +83,7 @@ public class Main {
 		 
 		 
 		 // fisrt name
-		 System.out.println("Insert Firt Name \n");
+		 System.out.println("Insert Fist Name");
 		 do{
 		 fName = Utilities.readString();
 		  
@@ -93,18 +93,17 @@ public class Main {
 		 if(fName.length()>50){
 			 System.out.println("you can olnly use 50char");
 		 }
-		 
 		 }while(fName.length()==0 || fName.length()>50);
 		 client.setFirstName(fName);
 		
 		 
 		 // last name
-		 System.out.println("Insert Last Name Name \n");
+		 System.out.println("Insert Last Name");
 		 do{
 		 lName = Utilities.readString();
 		  
 		 if(lName.length()==0){
-			 System.out.println("you may not leave the name in blank.");
+			 System.out.println("you may not leave the field in blank.");
 		 }
 		 if(lName.length()>50){
 			 System.out.println("you can olnly use 50char");
@@ -122,23 +121,62 @@ public class Main {
 		 // adressline1
 		 
 		 System.out.println("Insert adressLine 1");
+		 do{
 		 adress1 = Utilities.readString();
+		 if(adress1.length()==0){
+			 System.out.println("you may not leave the field in blank.");
+		 }
+		 if(adress1.length()>50){
+			 System.out.println("you can olnly use 50char");
+		 }
+		 
+		 }while(adress1.length()==0 || adress1.length()>50);
 		 client.setAddressLine1(adress1);
+
 		 
 		 // adressL2
 		 System.out.println("Insert adressLine 2");
+		 do{
 		 adress2 = Utilities.readString();
+		 if(adress2.length()==0){
+			 System.out.println("you may not leave the field in blank.");
+		 }
+		 if(adress2.length()>50){
+			 System.out.println("you can olnly use 50char");
+		 }
+		 
+		 }while(adress2.length()==0 || adress2.length()>50);
 		 client.setAddressLine2(adress2);
 		 
 		 // city
 		 System.out.println("Insert city");
+		 do{
 		 city = Utilities.readString();
+		 if(city.length()==0){
+			 System.out.println("you may not leave the field in blank.");
+		 }
+		 if(city.length()>50){
+			 System.out.println("you can olnly use 50char");
+		 }
+		 
+		 }while(city.length()==0 || city.length()>50);
 		 client.setCity(city);
 		 
 		 // state
 		 System.out.println("Insert state");
+         do{
 		 state = Utilities.readString();
+		 if(state.length()==0){
+			 System.out.println("you may not leave the field in blank.");
+		 }
+		 if(state.length()>50){
+			 System.out.println("you can olnly use 50char");
+		 }
+		 
+		 }while(state.length()==0 || state.length()>50);
 		 client.setState(state);
+		 
+		 
 		 // postalC
 		 System.out.println("Insert postal code");
 		 postalCode = Utilities.readString();
@@ -162,7 +200,8 @@ public class Main {
 		   if(salesRepEmployeeNumber> lu.size()){
 			   System.out.println("There are only " + lu.size() + " employees.");
 		   }
-		 }while(salesRepEmployeeNumber<0 || salesRepEmployeeNumber> lu.size());
+		   
+		 }while(salesRepEmployeeNumber> lu.size());
 	 
 		 
 		 // creditLim	 
@@ -170,9 +209,7 @@ public class Main {
 		 creditLimit = Utilities.readDouble();
 		 client.setCreditlimit(creditLimit);
 		 
-		 
-		
-		 
+		 //insert on data base
 		 x= DataBase.insertCustomer(client);
 		 
 		 if (x==0){
