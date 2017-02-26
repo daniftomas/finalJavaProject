@@ -1,0 +1,102 @@
+Customer's List:
+
+Name: Maria Albertina
+Address1: Rua Latino 45
+Address2: Travessa Bernardino Machado
+Postal Code: 3456-456
+City: Coimbra
+State: Beira Litoral 
+Country: Portugal
+Phone: 456789987
+Charger employee: N/A
+
+Name: Catarina Furtado
+Address1: Rua dos Candeeiros, 67
+Address2: N/A
+Postal Code: 2345-567
+City: Lisboa
+State: N/A 
+Country: N/A
+Phone: 234567890
+Charger employee: Ribeiro Maria
+
+Name: Catarina Furtado
+Address1: Rua dos Candeeiros, 67
+Address2: N/A
+Postal Code: 2345-567
+City: Lisboa
+State: N/A 
+Country: N/A
+Phone: 234567890
+Charger employee: Ribeiro Maria
+
+Name: Mário Soares
+Address1: Rua Nicósia Aopel 45
+Address2: Avenida Magalh?s Godinho
+Postal Code: 3456-123
+City: Aveiro
+State: Beira Litoral 
+Country: Portugal
+Phone: 351 234 345
+Charger employee: N/A
+
+Name: António Alberto
+Address1: Rua Do outro mundo, 1
+Address2: Travessa do lado de la, 2
+Postal Code: 1000-456
+City: Faro
+State: Algarve 
+Country: Portugal
+Phone: 984567382
+Charger employee: N/A
+
+Name: Maria Graça
+Address1: Rua da Maria da Fonete, 34
+Address2: Rua Dom Carlos I, 45
+Postal Code: 3456
+City: Guarda
+State: Beira Alta 
+Country: Portugal
+Phone: 345-342-344
+Charger employee: N/A
+
+Name: José  Fonseca
+Address1: Rua do outro Mundo
+Address2: Travessa do outro lado
+Postal Code: 3452
+City: Évora
+State: Alto Alentejo 
+Country: Portugal
+Phone: +(351)234567890
+Charger employee: N/A
+
+Name: Zita Gonçalves
+Address1: Rua Sem fundo, 56
+Address2: Travessa do curazamento sem travessa, 4
+Postal Code: 3456-345
+City: Braga
+State: Minho 
+Country: Portugal
+Phone: 324543445
+Charger employee: Cajuda Manuel
+
+Name: António Alberto
+Address1: Rua Do outro mundo, 1
+Address2: Travessa do lado de la, 2
+Postal Code: 1000-456
+City: Faro
+State: Algarve 
+Country: Portugal
+Phone: 984567382
+Charger employee: N/A
+
+Name: Daniela Tomás
+Address1: danielaftomas@gmail.com
+Address2: danielaftomas@hotmail.com
+Postal Code: 3090-814
+City: Aveiro
+State: Aveiro 
+Country: Portugal
+Phone: 917791339
+Charger employee: N/A
+
