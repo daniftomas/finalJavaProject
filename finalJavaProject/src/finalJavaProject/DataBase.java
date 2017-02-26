@@ -186,6 +186,127 @@ public class DataBase {
 		return emps;
 	}
 
+	//GET PRODUCTS LIST!
+	public static List<Product> getProductList() {
+		Product product = null;
+		List<Product> products = new ArrayList<>();
+		String productCode;
+		String productName;
+		String productLine;
+		String productScale;
+		String productVendor;
+		String productDescription;
+		int quantityInStock;
+		double buyPrice;
+		double msrp;
+		Statement smt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql = "SELECT productCode, productName,productLine, productScale, productVendor, productDescription, quantityInStock,buyPrice, msrp from Products;";
+			ResultSet rs = smt.executeQuery(sql);
+			while (rs.next()) {
+				productCode = rs.getString("productCode");
+				productName = rs.getString("productName");
+				productLine = rs.getString("productLine");
+				productScale = rs.getString("productScale");
+				productVendor = rs.getString("productVendor");
+				productDescription = rs.getString("productDescription");
+				quantityInStock = rs.getInt("quantityInStock");
+				buyPrice = rs.getDouble("buyPrice");
+				msrp = rs.getDouble("msrp");
+				
+				product = new Product(productCode, productName,productLine, productScale, productVendor, productDescription, quantityInStock,buyPrice, msrp);
+				products.add(product);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return products;
+	}
+	
+	
+	//get product by code
+	public static Product getProduct(String code) {
+		Product product = null;
+		List<Product> products = new ArrayList<>();
+		String productCode;
+		String productName;
+		String productLine;
+		String productScale;
+		String productVendor;
+		String productDescription;
+		int quantityInStock;
+		double buyPrice;
+		double msrp;
+		Statement smt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql;
+			if (code == null) return null;
+			if ((code == null)||(code.equals(""))) {
+				sql = "SELECT productCode, productName,productLine, productScale, productVendor, productDescription, quantityInStock,buyPrice, msrp from Products where productCode = '"+code+"'";
+				} else {
+				sql = "SELECT productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, msrp from Customers where productCode = '"+code+"'";
+			}
+			ResultSet rs = smt.executeQuery(sql);
+			if (rs.next()) {
+				productCode = rs.getString("productCode");
+				productName = rs.getString("productName");
+				productLine = rs.getString("productLine");
+				productScale = rs.getString("productScale");
+				productVendor = rs.getString("productVendor");
+				productDescription = rs.getString("productDescription");
+				quantityInStock = rs.getInt("quantityInStock");
+				buyPrice = rs.getDouble("buyPrice");
+				msrp = rs.getDouble("msrp");
+				
+				product = new Product(productCode, productName,productLine, productScale, productVendor, productDescription, quantityInStock,buyPrice, msrp);
+				products.add(product);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return product;
+	}
+	
+	
+	
+	
+	
 	// permite obter uma lista de clientes
 	public static List<Customer> getCustomerList() {
 		Customer customer = null;
