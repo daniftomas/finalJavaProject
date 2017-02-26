@@ -262,9 +262,7 @@ public class DataBase {
 			smt = c.createStatement();
 			String sql;
 			if (code == null) return null;
-			if ((code == null)||(code.equals(""))) {
-				sql = "SELECT productCode, productName,productLine, productScale, productVendor, productDescription, quantityInStock,buyPrice, msrp from Products where productCode = '"+code+"'";
-				} else {
+			else {
 				sql = "SELECT productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, msrp from Customers where productCode = '"+code+"'";
 			}
 			ResultSet rs = smt.executeQuery(sql);
