@@ -16,7 +16,7 @@ public class Main {
 					+ "1-> Register new client \n" 
 					+ "2-> Make new order \n"
 					+ "3-> View customer list\n" 
-					+ "4-> Print list of customer's orders \n"
+					+ "4-> Export list of customer's orders \n"
 					+ "5-> Import list of new employees \n" 
 					+ "0-> Out!");
 
