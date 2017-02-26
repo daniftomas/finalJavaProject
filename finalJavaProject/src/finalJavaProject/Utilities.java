@@ -149,30 +149,28 @@ public static LocalDate insertLD(){
 	
 	DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	LocalDate time = LocalDate.now();
-	
+
 	System.out.println(time.format(format));
-	
 
 	Scanner year = new Scanner(System.in);
 	Scanner month = new Scanner(System.in);
 	Scanner day = new Scanner(System.in);
-	
-	int x = Integer.parseInt(year.nextLine());
-	int y = Integer.parseInt(month.nextLine());
-	int z = Integer.parseInt(day.nextLine());
-	
-	String temp =  x + "/" +y + "/" +z ;
+	String x = year.nextLine();
+	String y = month.nextLine();
+	if (y.length() == 1) {
+		y = "0" + y;
+	}
+	String z = day.nextLine();
+	if (z.length() == 1) {
+		z = "0" + z;
+	}
+	String temp = x + "/" + y + "/" + z;
 	System.out.println(temp);
-	
-	try{
+
 		LocalDate tempo = LocalDate.parse(temp, format);
 		System.out.println(tempo);
-		}catch(DateTimeParseException e){
-			System.out.println("text cannot be parsed");
-		}
 	
-	
-	return time;
+	return tempo;
 }
 
 public static String insertAdressLine(){

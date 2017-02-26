@@ -131,7 +131,8 @@ public class Customer extends Person implements Serializable, Comparable<Custome
 	}
 
 	public String getCustomerName() {
-		return customerName;
+		if (customerName == null) return super.getFirstName() + " " + super.getLastName();
+		else return customerName;
 	}
 
 
@@ -208,19 +209,42 @@ public class Customer extends Person implements Serializable, Comparable<Custome
 	}
 	
 	public String toString(){
-		if (this.getState().equals("")) state = "N/A";
-		if (this.getCity().equals("")) city = "N/A";
-		if (this.getCountry().equals("")) country = "N/A";
-		if (this.getAddressLine1().equals("")) addressLine1 = "N/A";
-		if (this.getAddressLine2().equals("")) addressLine2 = "N/A";
-		return "Name: "+ this.getCustomerName() + "\n" +
-				"Address: " + this.getAddressLine1() + "\n" +
-				"Address2: " + this.getAddressLine2() + "\n" +
-				"Postal Code: " + this.getPostalCode() + "\n" +
-				"City: " + this.getCity() + "\n" + 
-				"State: " + this.getState() + " " + "\n" +
-				"Country: "+ this.getCountry() + "\n" +
-				"Phone: " + this.getPhone();
+		String estado;
+		String cidade;
+		String pais;
+		String endereco1;
+		String endereco2;
+		String telefone;
+		String codigoPostal;
+		if (this.getState().equals("")) estado = "N/A";
+		else estado = this.getState(); 
+		if (this.getCity().equals("")) cidade = "N/A";
+		else cidade = this.getCity();
+		if (this.getCountry().equals("")) pais = "N/A";
+		else pais = this.getCountry();
+		if (this.getAddressLine1().equals("")) endereco1 = "N/A";
+		else endereco1 = this.getAddressLine1();
+		if (this.getAddressLine2().equals("")) endereco2 = "N/A";
+		else endereco2 = this.getAddressLine2();
+		if (this.getPhone().equals("")) telefone = "N/A";
+		else telefone = this.getPhone();
+		if (this.getPostalCode().equals("")) codigoPostal = "N/A";
+		else codigoPostal = this.getPostalCode();
+		String ff = "Name: "+ this.getCustomerName() + "\n" +
+				"Address1: " + endereco1 + "\n" +
+				"Address2: " + endereco2 + "\n" +
+				"Postal Code: " + codigoPostal + "\n" +
+				"City: " + cidade + "\n" + 
+				"State: " + estado + " " + "\n" +
+				"Country: "+ pais + "\n" +
+				"Phone: " + telefone;
+		if (this.getSalesRepEmployeeNumber() > 0) {
+			Employee emp = DataBase.getEmployeeByNumber(this.getSalesRepEmployeeNumber());
+			ff += "\nCharger employee: "+ emp.getFirstName() + " " + emp.getLastName()+"\n";
+		} else {
+			ff += "\nCharger employee: N/A\n" ;
+		}
+		return ff;
 	}
 
 	@Override

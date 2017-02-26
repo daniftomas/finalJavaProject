@@ -11,15 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileIO {
-	
-	public static final String BINARYFILE = "clientesBin.bin";
+	public static final String BINARYFILEFINAL = "customersBin.bin";
+	public static String BINARYFILE = "customersBin.bin";
+	public static String CUSTOMERSTXT = "customersList.txt";
+	public static String ORDERSTXT = "orders.txt";
  
 	public static boolean exportToFile(List<Customer> clientes) {
 		BufferedWriter outputStream = null;
 		try {
-			outputStream = new BufferedWriter(new FileWriter("clientes.txt"));
+			outputStream = new BufferedWriter(new FileWriter(CUSTOMERSTXT));
+			outputStream.write("Customer's List:\n\n");
 			for (Customer cliente : clientes) {
-				outputStream.write(cliente.toString());
+				outputStream.write(cliente.toString()+"\n");
 				outputStream.flush();
 			}
 		} catch (IOException e) {
@@ -42,7 +45,7 @@ public class FileIO {
 		BufferedWriter outputStream = null;
 		List<Order> orders = DataBase.getOrders(customer);
 		try {
-			outputStream = new BufferedWriter(new FileWriter("orders.txt"));
+			outputStream = new BufferedWriter(new FileWriter(ORDERSTXT));
 			for (Order order : orders) {
 				outputStream.write(order.toString());
 				outputStream.flush();
@@ -87,17 +90,15 @@ public class FileIO {
 	// cria uma lista de clientes a partir de um ficheiro binário
 	// útil para inserir na base de dados a partir de um ficheiro binário 
 	@SuppressWarnings("unchecked")
-	public static List<Customer> importCustomersBinary(String ficheiro) {
+	public static List<Customer> importCustomersBinary() {
 		FileInputStream fileIn = null;
 		ObjectInputStream in = null;
 		List<Customer> customers = new ArrayList<>();
 		try {
-			fileIn = new FileInputStream(ficheiro);
+			fileIn = new FileInputStream(BINARYFILE);
 			in = new ObjectInputStream(fileIn);
 			customers = (List<Customer>) in.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
+		} catch (IOException | ClassNotFoundException e) {} finally {
 			try {
 				if (in != null) in.close();
 				if (fileIn != null) fileIn.close();

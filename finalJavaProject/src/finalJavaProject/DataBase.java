@@ -513,8 +513,8 @@ public class DataBase {
 	}
 
 	// insere Cliente na base de dados a partir de um ficheiro binário
-	public static int insertCustomersByBinaryFile(String binario) {
-		List<Customer> customers = FileIO.importCustomersBinary(binario);
+	public static int insertCustomersByBinaryFile() {
+		List<Customer> customers = FileIO.importCustomersBinary();
 		Statement smt = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -648,7 +648,6 @@ public class DataBase {
 			int i = 0;
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
-			c.setAutoCommit(false);
 			smt = c.createStatement();
 			while (i < customers.size()) {
 				customer = customers.get(i);
@@ -663,11 +662,16 @@ public class DataBase {
 						+ customer.getSalesRepEmployeeNumber() + "," + customer.getCreditlimit() + ")";
 					smt.executeUpdate(sql);
 				}
+				i++;
 			}
-			c.commit();
-			c.setAutoCommit(true);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
+			try {
+				if (c != null) {
+					c.rollback();
+				}
+			} catch (SQLException e1) {
+			}
 			return false;
 		} finally {
 			if (smt != null) {
@@ -689,8 +693,8 @@ public class DataBase {
 	}
 
 	// Insere uma encomenda
-	public static boolean insertOrder(Customer cust, LocalDate date, LocalDate requiredDate,
-			LocalDate shippedDate, Order.Status status, String comments, Product produto, int quantidade,
+	public static boolean insertOrder(Customer cust, LocalDateTime date, LocalDateTime requiredDate,
+			LocalDateTime shippedDate, Order.Status status, String comments, Product produto, int quantidade,
 			double preco, int orderLineNumber) {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		Statement smt = null;

@@ -46,8 +46,7 @@ public class Main {
 			System.out.println("NEW ORDER");
 			break;
 		case 3:
-			System.out.println("cenas3\n");
-			//printCustomerList();
+			printCustomerList();
 			break;
 		case 4:
 			System.out.println("cenas4\n");
@@ -245,6 +244,9 @@ public class Main {
 		 double preco;
 		 int orderLineNumber;
 		 
+		 date = LocalDate.now();
+		 
+		 requiredDate = Utilities.insertLD();
 		 
 		 
 		 
