@@ -100,3 +100,23 @@ Country: Portugal
 Phone: 917791339
 Charger employee: N/A
 
+Name: Vasco Santos
+Address1: vascoCenas@gmail.com
+Address2: vascoCes@gmail.com
+Postal Code: 2134-432
+City: aveiro
+State: aveiro 
+Country: Portugal
+Phone: 913782902
+Charger employee: Ribeiro Maria
+
+Name: Élio Tomás
+Address1: cenas@ua.pt
+Address2: cenas2@ua.pt
+Postal Code: 234123-2312
+City: porto
+State: porto 
+Country: Portugal
+Phone: 917348543
+Charger employee: Ribeiro Maria
+

@@ -995,70 +995,72 @@ public class DataBase {
 	}
 
 	// Insere uma encomenda
-	public static boolean insertOrder(Customer cust, LocalDateTime date, LocalDateTime requiredDate,
-			LocalDateTime shippedDate, Order.Status status, String comments, Product produto, int quantidade,
-			double preco, int orderLineNumber) {
-		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		Statement smt = null;
-		Statement smt2 = null;
-		String sql = "";
-		int customerNumber = -1;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
-			c.setAutoCommit(false);
-			smt = c.createStatement();
-			smt2 = c.createStatement();
-			if (cust.getCustomerNumber() == -1) {
-				sql = "select customerNumber from Customers where customerName = '" + cust.getCustomerName()
-						+ "' and phone = '" + cust.getPhone() + "' and " + "country = '" + cust.getCountry()
-						+ "' and state = '" + cust.getState() + "' and city = '" + cust.getCity() + "' and "
-						+ "postalCode = '" + cust.getPostalCode() + "' and salesRepEmployeeNumber = "
-						+ cust.getSalesRepEmployeeNumber() + " and " + "addressLine1 = '" + cust.getAddressLine1()
-						+ "';";
-				ResultSet rs = smt.executeQuery(sql);
-				if (rs.next()) {
-					customerNumber = rs.getInt(1);
+	// Insere uma encomenda
+		public static boolean insertOrder(Customer cust, LocalDate date, LocalDate requiredDate,
+				LocalDate shippedDate, Order.Status status, String comments, Product produto, int quantidade,
+				double preco, int orderLineNumber) {
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			Statement smt = null;
+			Statement smt2 = null;
+			String sql = "";
+			int customerNumber = -1;
+			try {
+				Class.forName("org.sqlite.JDBC");
+				c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+				c.setAutoCommit(false);
+				smt = c.createStatement();
+				smt2 = c.createStatement();
+				if (cust.getCustomerNumber() == -1) {
+					sql = "select customerNumber from Customers where customerName = '" + cust.getCustomerName()
+							+ "' and phone = '" + cust.getPhone() + "' and " + "country = '" + cust.getCountry()
+							+ "' and state = '" + cust.getState() + "' and city = '" + cust.getCity() + "' and "
+							+ "postalCode = '" + cust.getPostalCode() + "' and salesRepEmployeeNumber = "
+							+ cust.getSalesRepEmployeeNumber() + " and " + "addressLine1 = '" + cust.getAddressLine1()
+							+ "';";
+					ResultSet rs = smt.executeQuery(sql);
+					if (rs.next()) {
+						customerNumber = rs.getInt(1);
+					}
+				} else {
+					customerNumber = cust.getCustomerNumber();
 				}
-			} else {
-				customerNumber = cust.getCustomerNumber();
-			}
-			sql = "insert into Orders(orderDate, requiredDate, shippedDate, status, comments, customerNumber) values "
-					+ "('" + fmt.format(date) + "','" + fmt.format(requiredDate) + "','" + fmt.format(shippedDate)
-					+ "','" + status.toString() + "','" + comments + "'," + customerNumber + ")";
-			smt.executeUpdate(sql);
-			sql = "SELECT last_insert_rowid()";
-			ResultSet rs = smt2.executeQuery(sql);
-			if (rs.next()) {
-				int val = rs.getInt(1);
-				sql = "insert into OrderDetails(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber) values "
-						+ "(" + val + ",'" + produto.getProductCode() + "', " + quantidade + ", " + preco + ","
-						+ orderLineNumber + ")";
+				sql = "insert into Orders(orderDate, requiredDate, shippedDate, status, comments, customerNumber) values "
+						+ "('" + fmt.format(date) + "','" + fmt.format(requiredDate) + "','" + fmt.format(shippedDate)
+						+ "','" + status.toString() + "','" + comments + "'," + customerNumber + ")";
 				smt.executeUpdate(sql);
-			}
-			c.commit();
-			c.setAutoCommit(true);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				sql = "SELECT last_insert_rowid()";
+				ResultSet rs = smt2.executeQuery(sql);
+				if (rs.next()) {
+					int val = rs.getInt(1);
+					sql = "insert into OrderDetails(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber) values "
+							+ "(" + val + ",'" + produto.getProductCode() + "', " + quantidade + ", " + preco + ","
+							+ orderLineNumber + ")";
+					smt.executeUpdate(sql);
+				}
+				c.commit();
+				c.setAutoCommit(true);
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+				return false;
+			} finally {
+				if (smt != null) {
+					try {
+						smt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (c != null) {
+					try {
+						c.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
-			if (c != null) {
-				try {
-					c.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			return true;
 		}
-		return true;
-	}
+
 	
 	public static int getEmployeeNumber(Employee emp){
 		Statement smt = null;

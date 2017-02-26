@@ -46,10 +46,22 @@ public class FileIO {
 		List<Order> orders = DataBase.getOrders(customer);
 		try {
 			outputStream = new BufferedWriter(new FileWriter(ORDERSTXT));
-			for (Order order : orders) {
-				outputStream.write(order.toString());
-				outputStream.flush();
+			outputStream.write("List orders from customer: "+customer.getCustomerName()+" \n\n");
+			if (!orders.isEmpty()) {
+				for (Order order : orders) {
+					outputStream.write("Order: \n");
+					if (order instanceof OrderDetail) {
+						OrderDetail det = (OrderDetail)order;
+						outputStream.write(det.toString()+"\n\n");
+					} else {
+						outputStream.write(order.toString()+"\n");
+					}
+					outputStream.flush();
+				}
+			} else {
+				outputStream.write("\nThere are no orders from this customer.");
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
