@@ -531,7 +531,6 @@ public class DataBase {
 			} else {
 				clienteID = cliente.getCustomerNumber();
 			}
-			System.out.println("ID: "+ clienteID);
 			String sql = "SELECT orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber from Orders where customerNumber = "
 					+ clienteID + ";";
 			ResultSet rs = smt.executeQuery(sql);
@@ -723,6 +722,62 @@ public class DataBase {
 				}
 			}
 		}
+	}
+	
+	
+	// falta getProduct(String codigo)
+	
+	public static List<Product> getProductsList() {
+		Statement smt = null;
+		String productName;
+		String productLine;
+		String productScale;
+		String productVendor;
+		String productDescription;
+		String productCode;
+		int quantityInStock;
+		double buyPrice;
+		double msrp;
+		Product product = null;
+		List<Product> products = new ArrayList<>();
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:" + baseDados);
+			smt = c.createStatement();
+			String sql = "select productCode, productName, productLine, productScale, ProductVendor, productDescription, quantityInStock, buyPrice, MSRP from products;";
+			ResultSet rs = smt.executeQuery(sql);
+			while (rs.next()) {
+				productCode = rs.getString("productCode");
+				productName = rs.getString("productName");
+				productLine = rs.getString("productLine");
+				productScale = rs.getString("productScale");
+				productVendor = rs.getString("productVendor");
+				productDescription = rs.getString("productDescription");
+				quantityInStock = rs.getInt("quantityInStock");
+				buyPrice = rs.getDouble("buyPrice");
+				msrp = rs.getDouble("MSRP");
+				product = new Product(productCode, productName,productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, msrp);
+				products.add(product);
+			} 
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return products;
 	}
 
 	// Insere um produto,já com validação
@@ -964,4 +1019,5 @@ public class DataBase {
 		}
 		return emp;
 	}
+	
 }
