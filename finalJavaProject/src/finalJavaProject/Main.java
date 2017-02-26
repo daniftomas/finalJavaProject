@@ -39,7 +39,7 @@ public class Main {
 
 		case 1:
 			System.out.println("NEW CLIENT");
-			//insertDBCustomer();
+			insertDBCustomer();
 			
 			break;
 		case 2:
@@ -128,7 +128,7 @@ public class Main {
 		 
 		 System.out.println("Insert adressLine 1");
 		 do{
-		 adress1 = Utilities.readString();
+		 adress1 = Utilities.insertAdressLine();
 		 if(adress1.length()==0){
 			 System.out.println("you may not leave the field in blank.");
 		 }
@@ -143,7 +143,7 @@ public class Main {
 		 // adressL2
 		 System.out.println("Insert adressLine 2");
 		 do{
-		 adress2 = Utilities.readString();
+		 adress2 = Utilities.insertAdressLine();
 		 if(adress2.length()==0){
 			 System.out.println("you may not leave the field in blank.");
 		 }
@@ -185,7 +185,7 @@ public class Main {
 		 
 		 // postalC
 		 System.out.println("Insert postal code");
-		 postalCode = Utilities.readString();
+		 postalCode = Utilities.insertPostalCode();
 		 client.setPostalCode(postalCode);
 		 
 		 // country

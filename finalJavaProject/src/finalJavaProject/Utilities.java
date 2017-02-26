@@ -136,7 +136,7 @@ public static String insertPhone(){
 			postalCode = readString();
 			x = validateCodePostal(postalCode);
 			if (!x) {
-				System.out.println("phone number not valid");
+				System.out.println("postal code number not valid");
 			}
 
 		} while (!x);
@@ -173,6 +173,24 @@ public static LocalDate insertLD(){
 	
 	
 	return time;
+}
+
+public static String insertAdressLine(){
+	
+	boolean x = false;
+	String adress;
+
+	do {
+		adress = readString();
+		x = validateEmail(adress);
+		if (!x) {
+			System.out.println("adressline number not valid");
+		}
+
+	} while (!x);
+
+	return adress;
+	
 }
 	
 	
