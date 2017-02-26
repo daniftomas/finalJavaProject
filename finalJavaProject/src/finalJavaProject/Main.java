@@ -45,10 +45,11 @@ public class Main {
 			break;
 		case 3:
 			System.out.println("cenas3\n");
+			printCustomerList();
 			break;
 		case 4:
 			System.out.println("cenas4\n");
-			printCustomerList();
+			
 			break;
 		case 5:
 			System.out.println("cenas5\n");
@@ -251,7 +252,6 @@ public class Main {
 		 
 		 Customer cliente = new Customer();
 		 
-		 List<Order> orders = DataBase.getOrders(cliente);
 		 
 	 }
 	 
