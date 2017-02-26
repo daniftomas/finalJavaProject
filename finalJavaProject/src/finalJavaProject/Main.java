@@ -198,6 +198,7 @@ public class Main {
 		 client.setCountry(country);
 		 
 		 // sales repEmploeeNumber
+		 System.out.println("Choose employee by the number.");
 		 List<Employee> lu = DataBase.getEmployeesList();
 		   String employee;
 		   System.out.println("Employees List:\n");
@@ -254,7 +255,7 @@ public class Main {
 		 do{
 		 cust = pickCustomer();
 		 if(cust==null){
-			 System.out.println("customer not valid.");
+			 System.out.println("Customer not valid.");
 		 }
 		 }while(cust==null);
 		 

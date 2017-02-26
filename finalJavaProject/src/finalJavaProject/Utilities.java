@@ -1,5 +1,6 @@
 package finalJavaProject;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -149,26 +150,51 @@ public static LocalDate insertLD(){
 	
 	DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	LocalDate time = LocalDate.now();
+	String temp="";
+	LocalDate tempo= null;
+	boolean valid;
 
 	System.out.println(time.format(format));
-
+	
 	Scanner year = new Scanner(System.in);
 	Scanner month = new Scanner(System.in);
 	Scanner day = new Scanner(System.in);
-	String y = year.nextLine();
-	String m = month.nextLine();
+	String y="";
+	String m ="";
+	String d="";
+	
+	do{
+	valid=true;
+	System.out.println("year");
+	y = year.nextLine();
+	System.out.println("month");
+	m = month.nextLine();
 	if (m.length() == 1) {
 		m = "0" + m;
 	}
-	String d = day.nextLine();
+	System.out.println("day");
+	d = day.nextLine();
 	if (d.length() == 1) {
 		d = "0" + d;
 	}
-	String temp = y + "/" + m + "/" + d;
-	System.out.println(temp);
-
-		LocalDate tempo = LocalDate.parse(temp, format);
-		System.out.println(tempo);
+	try{
+	LocalDate.of(Integer.parseInt(y), Integer.parseInt(m), Integer.parseInt(d));
+	}catch(DateTimeException e){
+		valid=false;
+		System.out.println("date not valid.");
+		continue;
+	}
+	temp = y + "/" + m + "/" + d;
+	tempo = LocalDate.parse(temp, format);
+	
+	if(tempo.isBefore(time)){
+		valid=false;
+		System.out.println("Choose a date after today");
+		continue;
+	}
+	System.out.println(tempo);
+	
+	}while(valid==false);
 	
 	return tempo;
 }
