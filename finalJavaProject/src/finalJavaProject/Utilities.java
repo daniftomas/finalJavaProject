@@ -45,7 +45,7 @@ public class Utilities {
 	
 	//valid cod postal
 	public static boolean validateCodePostal(String codePostal){
-		return (codePostal.matches("\\d*(([\\-])?\\d*)?"));
+		return (codePostal.matches("\\d{4}(([\\-])?\\d{3})?"));
 	}
 	
 	// read positive number from pad

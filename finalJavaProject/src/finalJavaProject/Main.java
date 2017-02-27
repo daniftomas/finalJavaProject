@@ -107,36 +107,33 @@ public class Main {
 
 		// phone
 		System.out.println("Insert phone \n");
+	
 		phone = Utilities.insertPhone();
+	
 		client.setPhone(phone);
 
 		// adressline1
 
 		System.out.println("Insert adressLine 1");
 		do {
-			adress1 = Utilities.readString();
-			if (adress1.length() == 0) {
-				System.out.println("you may not leave the field in blank.");
-			}
+			adress1 = Utilities.insertAdressLine();
+			
 			if (adress1.length() > 50) {
 				System.out.println("you can olnly use 50char");
 			}
 
-		} while (adress1.length() == 0 || adress1.length() > 50);
+		} while (adress1.length() > 50);
 		client.setAddressLine1(adress1);
 
 		// adressL2
 		System.out.println("Insert adressLine 2");
 		do {
-			adress2 = Utilities.readString();
-			if (adress2.length() == 0) {
-				System.out.println("you may not leave the field in blank.");
-			}
+			adress2 = Utilities.insertAdressLine();
+			
 			if (adress2.length() > 50) {
 				System.out.println("you can olnly use 50char");
 			}
-
-		} while (adress2.length() == 0 || adress2.length() > 50);
+		} while ( adress2.length() > 50);
 		client.setAddressLine2(adress2);
 
 		// city
@@ -169,14 +166,12 @@ public class Main {
 
 		// postalCode
 		System.out.println("Insert postal code: ");
-		boolean passou = false;
 		do {
-			if (passou) {
-				System.out.print("Bad postal code, insert again: ");
-				passou = true;
+			postalCode = Utilities.insertPostalCode();
+			if (postalCode.length() == 0) {
+				System.out.println("you may not leave the field in blank.");
 			}
-			postalCode = Utilities.readString();
-		} while (!Utilities.validateCodePostal(postalCode));
+		} while (postalCode.length()>50 || postalCode.length()==0);
 		client.setPostalCode(postalCode);
 
 		// country
@@ -274,7 +269,9 @@ public class Main {
 	private static Customer pickCustomer() {
 		String vv = "";
 		System.out.println();
-		System.out.print("Choose one of this options: search or (l)ist customers. (x) to exit.");
+		System.out.print("Choose one of this options: \n (s) search \n (l)ist customers. \n (x) to exit.");
+		
+		do{
 		vv = Utilities.readString();
 		if (vv.equals("x")) {
 			System.out.println();
@@ -309,7 +306,7 @@ public class Main {
 			} while ((b <= 0) || (b > l.size()));
 			System.out.println();
 			return l.get(b - 1);
-		} else {
+		} else if (vv.equals("s")) {
 			System.out.print("Write is phone or is addressLine: (x) to exit ");
 			boolean passou = false;
 			String valor = "";
@@ -327,15 +324,21 @@ public class Main {
 					return DataBase.getCustomer(valor, "");
 				}
 			} while (!valor.equals("x"));
-			System.out.println();
+		
+			System.out.print("");
 		}
+		else{
+			System.out.println("Not valid option.");
+		}
+		}while(!vv.equals("x") ||!vv.equals("s") ||!vv.equals("l"));
 		return null;
 	}
 
 	private static Product pickProduct() {
 		String vv = "";
 		System.out.println();
-		System.out.print("Choose one of this options: search or (l)ist products. (x) to exit.");
+		System.out.print("Choose one of this options: \n (s) search \n (l)list products \n (x) to exit.");
+		do{
 		vv = Utilities.readString();
 		if (vv.equals("x")) {
 			System.out.println();
@@ -370,7 +373,7 @@ public class Main {
 			} while ((b <= 0) || (b > l.size()));
 			System.out.println();
 			return l.get(b - 1);
-		} else {
+		} else if (vv.equals("s")){
 			System.out.print("Write is Code value: (x) to exit ");
 			String valor = "";
 			valor = Utilities.readString();
@@ -383,8 +386,12 @@ public class Main {
 					return DataBase.getProduct(valor);
 				}
 			}
-			System.out.println();
+			System.out.print("");
 		}
+		else{
+			System.out.println("Not valid option");
+		}
+		}while(!vv.equals("x") ||!vv.equals("s") ||!vv.equals("l"));
 		return null;
 	}
 	
@@ -430,7 +437,7 @@ public class Main {
 
 		public static void importClientsFromBinaryDocument() {
 			String x = "y";
-			System.out.print("Do you need to create customers first? (y/n/x to e(x)it) ");
+			System.out.print("Do you need to create customers first? \n (y)yes \n(n)no \n (x) to e(x)it) ");
 			x = Utilities.readString();
 			if ((x.equals("x")) || (x.equals("X"))) {
 				System.out.println();
@@ -439,6 +446,7 @@ public class Main {
 			List<Customer> customers = new ArrayList<>();
 			if ((x.equals("y")) || (x.equals("Y"))) {
 				do {
+					
 					Customer client = new Customer();
 					String fName;
 					String lName;
@@ -451,120 +459,119 @@ public class Main {
 					String postalCode;
 					int salesRepEmployeeNumber;
 					double creditLimit;
-					System.out.println("\n************ Customer creation **************\n");
+
 					// first name
-					System.out.print("Insert Fist Name: ");
+					System.out.println("Insert Fist Name");
 					do {
 						fName = Utilities.readString();
+
 						if (fName.length() == 0) {
 							System.out.println("you may not leave the name in blank.");
 						}
 						if (fName.length() > 50) {
-							System.out.println("you can olnly use 50 char");
+							System.out.println("you can olnly use 50char");
 						}
 					} while (fName.length() == 0 || fName.length() > 50);
 					client.setFirstName(fName);
+
 					// last name
-					System.out.print("Insert Last Name: ");
+					System.out.println("Insert Last Name");
 					do {
 						lName = Utilities.readString();
+
 						if (lName.length() == 0) {
-							System.out.print("you may not leave the field in blank. Insert last Name: ");
+							System.out.println("you may not leave the field in blank.");
 						}
 						if (lName.length() > 50) {
-							System.out.print("you can only use 50 char. Insert last Name:");
+							System.out.println("you can olnly use 50char");
 						}
 
 					} while (lName.length() == 0 || lName.length() > 50);
+
 					client.setLastName(lName);
+
 					// phone
-					System.out.print("Insert phone: ");
+					System.out.println("Insert phone \n");
+				
 					phone = Utilities.insertPhone();
+				
 					client.setPhone(phone);
 
 					// adressline1
-					System.out.print("Insert adressLine 1: ");
+
+					System.out.println("Insert adressLine 1");
 					do {
-						adress1 = Utilities.readString();
-						if (adress1.length() == 0) {
-							System.out.print("you may not leave the field in blank. Insert addressLine 1: ");
-						}
+						adress1 = Utilities.insertAdressLine();
+						
 						if (adress1.length() > 50) {
-							System.out.print("you can olnly use 50 char. Insert addressLine 2: ");
-						}
-						if (!Utilities.validateEmail(adress1)) {
-							System.out.print("Email format please. Insert addressLine 1: ");
-							adress1 = "";
-						}
-					} while (adress1.length() == 0 || adress1.length() > 50);
-					client.setAddressLine1(adress1);
-					// adressLine2
-					System.out.print("Insert adressLine 2: ");
-					do {
-						adress2 = Utilities.readString();
-						if (adress2.length() == 0) {
-							System.out.print("you may not leave the field in blank. Insert addressLine 2: ");
-						}
-						if (adress2.length() > 50) {
-							System.out.print("you can only use 50 char. Insert addressLine 2: ");
-						}
-						if (!Utilities.validateEmail(adress2)) {
-							System.out.print("Email format please. Insert addressLine 1: ");
-							adress2 = "";
+							System.out.println("you can olnly use 50char");
 						}
 
-					} while (adress2.length() == 0 || adress2.length() > 50);
+					} while (adress1.length() > 50);
+					client.setAddressLine1(adress1);
+
+					// adressL2
+					System.out.println("Insert adressLine 2");
+					do {
+						adress2 = Utilities.insertAdressLine();
+						
+						if (adress2.length() > 50) {
+							System.out.println("you can olnly use 50char");
+						}
+					} while ( adress2.length() > 50);
 					client.setAddressLine2(adress2);
-					// city5
-					System.out.print("Insert city: ");
+
+					// city
+					System.out.println("Insert city");
 					do {
 						city = Utilities.readString();
 						if (city.length() == 0) {
-							System.out.print("you may not leave the field in blank. Insert city: ");
+							System.out.println("you may not leave the field in blank.");
 						}
 						if (city.length() > 50) {
-							System.out.print("you can olnly use 50 char. Insert city: ");
+							System.out.println("you can olnly use 50char");
 						}
 
 					} while (city.length() == 0 || city.length() > 50);
 					client.setCity(city);
+
 					// state
-					System.out.print("Insert state: ");
+					System.out.println("Insert state");
 					do {
 						state = Utilities.readString();
 						if (state.length() == 0) {
-							System.out.print("you may not leave the field in blank. Insert state: ");
+							System.out.println("you may not leave the field in blank.");
 						}
 						if (state.length() > 50) {
-							System.out.print("you can olnly use 50 char. Insert state: ");
+							System.out.println("you can olnly use 50char");
 						}
 
 					} while (state.length() == 0 || state.length() > 50);
 					client.setState(state);
+
 					// postalCode
-					System.out.print("Insert postal code: ");
-					boolean passou = false;
+					System.out.println("Insert postal code: ");
 					do {
-						if (passou) {
-							System.out.print("Bad postal code, insert again: ");
+						postalCode = Utilities.insertPostalCode();
+						if (postalCode.length() == 0) {
+							System.out.println("you may not leave the field in blank.");
 						}
-						passou = true;
-						postalCode = Utilities.readString();
-					} while (!Utilities.validateCodePostal(postalCode));
+					} while (postalCode.length()>50 || postalCode.length()==0);
 					client.setPostalCode(postalCode);
+
 					// country
-					System.out.print("Insert country: ");
+					System.out.println("Insert country");
 					country = Utilities.readString();
 					client.setCountry(country);
-					// salesrepEmploeeNumber
+
+					// sales repEmploeeNumber
 					List<Employee> lu = DataBase.getEmployeesList();
 					String employee;
-					System.out.println("\n******* Employees List *******\n");
+					System.out.println("Employees List:\n");
 					for (int i = 0; i < lu.size(); i++) {
 						employee = "" + (i + 1);
 						System.out.println(employee + ". " + lu.get(i).toString());
 					}
-					System.out.print("Select the responsible Employeer (number): ");
 					do {
 						salesRepEmployeeNumber = Utilities.readNumber();
 						if (salesRepEmployeeNumber > lu.size()) {
@@ -572,16 +579,11 @@ public class Main {
 						}
 					} while (salesRepEmployeeNumber > lu.size());
 					client.setSalesRepEmployeeNumber(lu.get(salesRepEmployeeNumber - 1).getEmployeeNumber());
-					// creditLimit
-					creditLimit = -1;
-					System.out.print("Enter a credit limit: ");
-					do {
-						creditLimit = Utilities.readDouble();
-						if (creditLimit < 0) {
-							System.out.println("Cant be a negative value. Enter a credit Limit: ");
-						}
-					} while (creditLimit <= 0);
+					// creditLim
+					System.out.println("Insert Credit limit");
+					creditLimit = Utilities.readDouble();
 					client.setCreditlimit(creditLimit);
+
 					customers.add(client);
 					System.out.print("Do you want to add another customer?? (Y/N)");
 					x = Utilities.readString();
