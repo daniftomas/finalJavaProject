@@ -181,7 +181,7 @@ public static LocalDate insertLD(){
 	LocalDate.of(Integer.parseInt(y), Integer.parseInt(m), Integer.parseInt(d));
 	}catch(DateTimeException e){
 		valid=false;
-		System.out.println("date not valid.");
+		System.out.println("Date not valid.");
 		continue;
 	}
 	temp = y + "/" + m + "/" + d;
@@ -212,10 +212,12 @@ public static String insertAdressLine(){
 		}
 
 	} while (!x);
+	
 
 	return adress;
 	
 }
+
 	
 	
 }

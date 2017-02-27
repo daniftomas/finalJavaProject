@@ -11,7 +11,7 @@ public class Main {
 		int choice;
 		do {
 			// Main menu
-			System.out.println("   **BEAUTIFUL MAIN** \n" + "1-> Register new client \n" + "2-> Make new order \n"
+			System.out.println("   *****BEAUTIFUL MAIN***** \n" + "1-> Register new client \n" + "2-> Make new order \n"
 					+ "3-> View customer list\n" + "4-> Export list of customer's orders \n"
 					+ "5-> Import list of new employees \n" + "0-> Out!");
 			// Read and choose
@@ -415,7 +415,7 @@ public class Main {
 	}
 	
 	// OPTION 4
-	public static void printCustomersList() {
+	public static void printOnScreenCustomersList() {
 		List<Customer> l = DataBase.getCustomerList();
 		String cust;
 		System.out.println("\n******* Customer's List ******* \n");
