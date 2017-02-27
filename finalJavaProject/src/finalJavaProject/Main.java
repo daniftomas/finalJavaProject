@@ -12,8 +12,8 @@ public class Main {
 		do {
 			// Main menu
 			System.out.println("   *****BEAUTIFUL MAIN***** \n" + "1-> Register new client \n" + "2-> Make new order \n"
-					+ "3-> View customer list\n" + "4-> Export list of customer's orders \n"
-					+ "5-> Import list of new employees \n" + "0-> Out!");
+					+ "3-> View customer list\n" + "4-> View Employees list\n" + "5-> View Products list\n" + "6-> Export customer list\n" + "7-> Export list of customer's orders \n"
+					+ "8-> Import list of new employees \n" + "0-> Out!");
 			// Read and choose
 			do {
 				System.out.print("Choose a number: ");
@@ -38,13 +38,34 @@ public class Main {
 			makeOrder();
 			break;
 		case 3:
-			exportClientsListToTXT();
+			Main.printOnScreenCustomersList();
 			break;
 		case 4:
+			System.out.println("******* Employees List ******* \n" );
+			List<Employee> emps = DataBase.getEmployeesList();
+			for (int h=0; h<emps.size(); h++){
+				System.out.println((h+1)+". "+emps.get(h).toString());
+				System.out.println();
+			}
+			System.out.println();
+			break;
+		case 5:
+			System.out.println("******* Products List ******* \n" );
+			List<Product> prods = DataBase.getProductsList();
+			for (int h=0; h<prods.size(); h++){
+				System.out.println((h+1)+". "+prods.get(h).toString());
+				System.out.println();
+			}
+			System.out.println();
+			break;	
+		case 6:
+			exportClientsListToTXT();
+			break;
+		case 7:
 			System.out.println("******* Printing orders *******");
 			Main.printCustomerList();
 			break;
-		case 5:
+		case 8:
 			importClientsFromBinaryDocument();
 			break;
 		case 0:
@@ -229,7 +250,7 @@ public class Main {
 		} else {
 			System.out.print("Chosen product: "+product.getProductDescription()+"\n\n");
 		}
-		System.out.print("Please, pick a date.\n");
+		System.out.print("Please, pick a order date.\n");
 		LocalDate date = Utilities.insertLD();
 		System.out.print("Limit days to be deliver: ");
 		int b = -1;
